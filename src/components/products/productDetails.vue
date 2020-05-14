@@ -14,11 +14,11 @@
             <b>Posts:</b> 104
           </li>
         </ul>
-        <button type="button" class="btn-back" @click="()=>$router.go(-1)">Back</button>
         <div>
           <input
-            style="margin-bottom: 10px;"
+            style="margin-bottom: 10px; background-color: rgb(243, 241, 241); width: 131.5px; height: 38px;"
             type="number"
+            min="0"
             class="form-control float-right quantity-field"
             placeholder="Q"
             v-model.number="quantity"
@@ -29,7 +29,7 @@
             class="btn btn-success add-cart"
             @click="addToCart"
             :disabled="
-              quantity <= 0 ||
+              quantity === 0 ||
                 quantity > getProductDetail.quantity ||
                 !Number.isInteger(quantity)
             "
@@ -40,11 +40,12 @@
             </span>
           </button>
         </div>
+        <button type="button" class="btn-back" @click="()=>$router.go(-1)">Back</button>
       </div>
       <div class="product-content">
         <h2>{{getProductDetail.title}}</h2>
         <hr />
-        <p>Price: {{getProductDetail.price}} | Max.Quantity: {{getProductDetail.quantity}}</p>
+        <p>Price: {{getProductDetail.price}} | On Stock: {{getProductDetail.quantity}}</p>
         <span>{{getProductDetail.category}}</span>
         <span>{{getProductDetail.location}}</span>
         <p class="product-description">{{getProductDetail.description}}</p>
