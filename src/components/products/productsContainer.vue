@@ -6,7 +6,6 @@
           <font-awesome-icon icon="list" />
         </label>
         <select
-          style="font-size:18px; width: 200px;"
           v-model="selectedCategory"
           id="category"
           name="categorySelector"
@@ -22,8 +21,8 @@
           class="input-search"
           placeholder="search..."
           type="text"
-          autocomplete="on"
-          @keyup.enter="searchFor"
+          v-model="searchValue"
+          @keyup="searchFor"
         />
         <font-awesome-icon v-model="searchValue" class="search-icon" icon="search" />
       </div>
@@ -68,9 +67,8 @@ export default {
         ];
       }
     },
-    searchFor(event) {
-      this.searchValue = event.target.value;
-      this.filteredProducts = this.filteredProducts.filter(product =>
+    searchFor() {
+      this.filteredProducts = this.products.filter(product =>
         product.title.toLowerCase().includes(this.searchValue.toLowerCase())
       );
     }
@@ -81,6 +79,8 @@ export default {
 <style scoped>
 .category-selection {
   background-color: rgb(243, 241, 241);
+  font-size: 18px;
+  width: 215px;
   outline: none;
 }
 .input-field {
@@ -94,9 +94,8 @@ export default {
   color: rgba(32, 32, 32, 0.568);
   outline: none;
   margin-left: 10px;
-  margin-top: 4px;
   font-size: 18px;
-  height: 30px;
+  height: 37.7px;
   width: 200px;
   border: none;
 }
@@ -110,7 +109,7 @@ export default {
 .category-content {
   margin-left: 10%;
 }
-@media only screen and (max-width: 990px) {
+@media only screen and (max-width: 770px) {
   .category-content {
     margin: auto;
     margin-bottom: 10px;

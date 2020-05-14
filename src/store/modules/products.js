@@ -12,6 +12,10 @@ const mutations = {
   },
   ADD_TO_CART(state, { productId, quantitySelected, price }) {
     const previousData = state.cart.find((element) => element.id === productId);
+    const reduceStoreQuantity = state.products.find(
+      (element) => element.id === productId
+    );
+    reduceStoreQuantity.quantity -= quantitySelected;
     if (previousData) {
       previousData.quantitySelected += quantitySelected;
     } else {

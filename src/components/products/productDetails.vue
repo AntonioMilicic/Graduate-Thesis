@@ -15,6 +15,31 @@
           </li>
         </ul>
         <button type="button" class="btn-back" @click="()=>$router.go(-1)">Back</button>
+        <div>
+          <input
+            style="margin-bottom: 10px;"
+            type="number"
+            class="form-control float-right quantity-field"
+            placeholder="Q"
+            v-model.number="quantity"
+          />
+        </div>
+        <div class="sell-container">
+          <button
+            class="btn btn-success add-cart"
+            @click="addToCart"
+            :disabled="
+              quantity <= 0 ||
+                quantity > getProductDetail.quantity ||
+                !Number.isInteger(quantity)
+            "
+          >
+            <span>
+              Add To Cart
+              <font-awesome-icon icon="shopping-cart" />
+            </span>
+          </button>
+        </div>
       </div>
       <div class="product-content">
         <h2>{{getProductDetail.title}}</h2>
@@ -34,11 +59,24 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      quantity: 0
+    };
   },
   computed: {
     getProductDetail() {
       return this.$store.getters.productDetail(parseInt(this.$route.params.id));
+    }
+  },
+  methods: {
+    addToCart() {
+      const orderInfo = {
+        productId: this.getProductDetail.id,
+        quantitySelected: this.quantity,
+        price: this.getProductDetail.price
+      };
+      this.$store.dispatch("addToCart_Store", orderInfo);
+      this.quantity = 0;
     }
   }
 };
