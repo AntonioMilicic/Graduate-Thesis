@@ -27,18 +27,29 @@ const mutations = {
     state.totalPrice += price * quantitySelected;
   },
   REMOVE_FROM_CART(state, id) {
-    const item = state.cart.find((element) => element.id === id);
-    state.cart.splice(state.cart.indexOf(item), 1);
+    const itemCart = state.cart.find((element) => element.id === id);
+    const itemStore = state.products.find((element) => element.id === id);
+    itemStore.quantity += itemCart.quantitySelected;
+    state.cart.splice(state.cart.indexOf(itemCart), 1);
   },
   CLEAR_CART(state) {
+    state.cart.forEach((element) => {
+      const alterProduct = state.products.find(
+        (product) => product.id === element.id
+      );
+      alterProduct.quantity += element.quantitySelected;
+    });
     state.cart = [];
   },
   ALTER_CART_QUANTITY(state, order) {
     const item = state.cart.find((element) => element.id === order.id);
+    const itemStore = state.products.find((element) => element.id === order.id);
     if (order.operation === "+") {
       item.quantitySelected++;
+      itemStore.quantity--;
     } else if (order.operation === "-") {
       item.quantitySelected--;
+      itemStore.quantity++;
     } else {
       console.log("Error, unknown operation");
     }
@@ -80,7 +91,10 @@ const actions = {
 
 const getters = {
   products: (state) => {
-    return state.products;
+    const availableProducts = state.products.filter(
+      (element) => element.quantity > 0
+    );
+    return availableProducts;
   },
   productDetail: (state) => (id) => {
     return state.products.find((element) => element.id === id);
