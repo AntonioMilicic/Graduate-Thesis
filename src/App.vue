@@ -11,9 +11,15 @@
         <router-view class="container-design" />
       </transition>
     </div>
-    <div class="back-to-top-container" @click="goToTop">
-      <font-awesome-icon icon="angle-double-up" class="back-to-top-button" />
-    </div>
+    <transition name="slide" mode="out-in">
+      <div
+        class="back-to-top-container"
+        @click="goToTop"
+        v-if="windowScrollVisible"
+      >
+        <font-awesome-icon icon="angle-double-up" class="back-to-top-button" />
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -23,6 +29,7 @@ import Header from "./components/header.vue";
 export default {
   data() {
     return {
+      windowScrollVisible: false,
       // pathCrumb: "",
       // splitPath: []
     };
@@ -33,11 +40,18 @@ export default {
   created() {
     this.$store.dispatch("initProducts");
   },
+  mounted() {
+    window.addEventListener("scroll", this.scrollEvent);
+  },
   methods: {
     goToTop() {
-      // console.log(window.pageYOffset, window.innerHeight);
       document.body.scrollTop = 0;
       document.documentElement.scrollTop = 0;
+    },
+    scrollEvent() {
+      if (window.pageYOffset > window.innerHeight / 3) {
+        this.windowScrollVisible = true;
+      } else this.windowScrollVisible = false;
     },
   },
   // methods: {
@@ -62,12 +76,12 @@ export default {
   //     return (this.splitPath = subCrumb);
   //   }
   // },
-  watch: {
-    // $route() {
-    //   this.pathCrumb = this.$route.path;
-    //   // this.splitCrumbs();
-    // },
-  },
+  // watch: {
+  //   $route() {
+  //     this.pathCrumb = this.$route.path;
+  //     this.splitCrumbs();
+  //   },
+  // },
 };
 </script>
 
