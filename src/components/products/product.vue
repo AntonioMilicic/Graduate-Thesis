@@ -1,8 +1,10 @@
 <template>
-  <div class="col mb-4">
+  <div class="col mb-2">
     <div class="card card-design">
       <router-link :to="link">
-        <img class="card-img-top" alt="card-img" :src="product.imgSrc" />
+        <div class="card-img-container">
+          <img class="card-img-top" alt="card-img" :src="product.imgSrc" />
+        </div>
       </router-link>
       <div class="card-body">
         <h5 class="card-title">{{ product.title }}</h5>
@@ -35,7 +37,7 @@
               Add To Cart
               <font-awesome-icon icon="shopping-cart" />
             </span>
-            <span class="tooltip-text" v-if="toolTip()">{{toolTipText}}</span>
+            <span class="tooltip-text" v-if="toolTip()">{{ toolTipText }}</span>
           </button>
         </div>
       </div>
@@ -96,16 +98,21 @@ export default {
   background-color: rgb(243, 241, 241);
 }
 .card-design {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 .card-design:hover {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
+.card-img-container {
+  width: 90%;
+  height: 200px;
+  margin-left: 5%;
+  margin-top: 5%;
+}
 .card-img-top {
-  border-radius: 0 0 20px 20px;
   max-width: 520px;
-  height: 180px;
+  height: 100%;
 }
 .add-cart {
   margin-bottom: 0;
