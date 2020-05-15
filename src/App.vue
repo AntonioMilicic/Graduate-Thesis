@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main-container">
     <app-header />
     <!-- <ul class="crumb-list">
       <router-link :to="pathCrumb" v-for="path in splitPath" :key="path.id" tag="li">
@@ -11,6 +11,9 @@
         <router-view class="container-design" />
       </transition>
     </div>
+    <div class="back-to-top-container" @click="goToTop">
+      <font-awesome-icon icon="angle-double-up" class="back-to-top-button" />
+    </div>
   </div>
 </template>
 
@@ -18,17 +21,24 @@
 import Header from "./components/header.vue";
 
 export default {
-  // data() {
-  //   return {
-  //     pathCrumb: "",
-  //     splitPath: []
-  //   };
-  // },
+  data() {
+    return {
+      // pathCrumb: "",
+      // splitPath: []
+    };
+  },
   components: {
-    appHeader: Header
+    appHeader: Header,
   },
   created() {
     this.$store.dispatch("initProducts");
+  },
+  methods: {
+    goToTop() {
+      // console.log(window.pageYOffset, window.innerHeight);
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    },
   },
   // methods: {
   //   splitCrumbs() {
@@ -53,11 +63,11 @@ export default {
   //   }
   // },
   watch: {
-    $route() {
-      this.pathCrumb = this.$route.path;
-      // this.splitCrumbs();
-    }
-  }
+    // $route() {
+    //   this.pathCrumb = this.$route.path;
+    //   // this.splitCrumbs();
+    // },
+  },
 };
 </script>
 
@@ -73,6 +83,33 @@ body {
 }
 .slide-leave-active {
   animation: slide-out 200ms ease-out forwards;
+}
+.back-to-top-container {
+  position: sticky;
+  bottom: 30px;
+  float: right;
+  margin-right: 5%;
+  z-index: 2;
+  height: 80px;
+  width: 60px;
+  opacity: 0.75;
+
+  border-radius: 30px;
+  background-color: rgb(243, 241, 241);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+.back-to-top-container:hover {
+  opacity: 1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.back-to-top-button {
+  margin-left: 22.5%;
+  margin-top: 22.5%;
+  z-index: 2;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 48px;
 }
 /* .crumb-list {
   list-style: none;
