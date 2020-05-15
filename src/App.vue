@@ -1,22 +1,13 @@
 <template>
   <div class="main-container">
     <app-header />
-    <!-- <ul class="crumb-list">
-      <router-link :to="pathCrumb" v-for="path in splitPath" :key="path.id" tag="li">
-        <pre><a>{{pathCrumb}}</a> > </pre>
-      </router-link>
-    </ul>-->
     <div class="container container-fluid">
       <transition name="slide" mode="out-in">
         <router-view class="container-design" />
       </transition>
     </div>
     <transition name="slide" mode="out-in">
-      <div
-        class="back-to-top-container"
-        @click="goToTop"
-        v-if="windowScrollVisible"
-      >
+      <div class="back-to-top-container" @click="goToTop" v-if="windowScrollVisible">
         <font-awesome-icon icon="angle-double-up" class="back-to-top-button" />
       </div>
     </transition>
@@ -29,13 +20,11 @@ import Header from "./components/header.vue";
 export default {
   data() {
     return {
-      windowScrollVisible: false,
-      // pathCrumb: "",
-      // splitPath: []
+      windowScrollVisible: false
     };
   },
   components: {
-    appHeader: Header,
+    appHeader: Header
   },
   created() {
     this.$store.dispatch("initProducts");
@@ -52,42 +41,14 @@ export default {
       if (window.pageYOffset > window.innerHeight / 3) {
         this.windowScrollVisible = true;
       } else this.windowScrollVisible = false;
-    },
-  },
-  // methods: {
-  //   splitCrumbs() {
-  //     let subCrumb = [];
-  //     let subWord = "";
-  //     for (let i = 0; i < this.pathCrumb.length; i++) {
-  //       subWord = subWord + this.pathCrumb[i];
-  //       if (
-  //         (i != 0 && this.pathCrumb[i] == "/") ||
-  //         (i != 0 && i == this.pathCrumb.length - 1)
-  //       ) {
-  //         if (this.pathCrumb[i] == "/") {
-  //           subWord = subWord.slice(0, -1);
-  //         }
-  //         subCrumb.push(subWord);
-  //         subWord = "";
-  //       } else if (i == 0 && this.pathCrumb[i] == "/") {
-  //         subWord = "";
-  //       }
-  //     }
-  //     return (this.splitPath = subCrumb);
-  //   }
-  // },
-  // watch: {
-  //   $route() {
-  //     this.pathCrumb = this.$route.path;
-  //     this.splitCrumbs();
-  //   },
-  // },
+    }
+  }
 };
 </script>
 
 <style>
 body {
-  min-width: 450px;
+  min-width: 475px;
 }
 .container-design {
   margin: 0 20px;
@@ -125,13 +86,6 @@ body {
   color: rgba(0, 0, 0, 0.6);
   font-size: 48px;
 }
-/* .crumb-list {
-  list-style: none;
-  display: flex;
-  margin-left: 10%;
-  margin-bottom: 20px;
-  font-size: 20px;
-} */
 
 @keyframes slide-in {
   from {

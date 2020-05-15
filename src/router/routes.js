@@ -10,7 +10,7 @@ import Checkout from "../components/cart/checkout.vue";
 export const routes = [
   { path: "/", component: Home },
   { path: "/Products", component: Products },
-  { path: "/Products/:id", component: ProductDetail },
+  { path: "/Products/Product-:id", component: ProductDetail },
   { path: "/Profile", component: Profile },
   { path: "/Cart", component: Cart },
   { path: "/Cart/Checkout", component: Checkout },

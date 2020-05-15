@@ -51,7 +51,7 @@ export default {
     return {
       quantity: 1,
       toolTipText: "",
-      link: "Products/" + this.product.id
+      link: "Products/Product-" + this.product.id
     };
   },
   props: ["product"],
