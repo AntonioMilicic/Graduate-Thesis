@@ -9,18 +9,23 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputEmail">Email</label>
-          <input v-model="email" type="email" class="form-control" id="inputEmail4" />
+          <input v-model="credentials.email" type="email" class="form-control" id="inputEmail4" />
         </div>
         <div class="form-group col-md-6">
           <label for="inputPassword">Password</label>
-          <input v-model="password" type="password" class="form-control" id="inputPassword4" />
+          <input
+            v-model="credentials.password"
+            type="password"
+            class="form-control"
+            id="inputPassword4"
+          />
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputAddress">Address</label>
           <input
-            v-model="adress"
+            v-model="credentials.adress"
             type="text"
             class="form-control"
             id="inputAddress"
@@ -30,7 +35,7 @@
         <div class="form-group col-md-6">
           <label for="inputAddress2">Address 2</label>
           <input
-            v-model="adress2"
+            v-model="credentials.adress2"
             type="text"
             class="form-control"
             id="inputAddress2"
@@ -41,21 +46,21 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputCity">City</label>
-          <input v-model="city" type="text" class="form-control" id="inputCity" />
+          <input v-model="credentials.city" type="text" class="form-control" id="inputCity" />
         </div>
         <div class="form-group col-md-4">
           <label for="inputCountry">Country</label>
-          <select v-model="country" id="inputCountry" class="form-control">
+          <select v-model="credentials.country" id="inputCountry" class="form-control">
             <option selected>Choose...</option>
             <option>...</option>
           </select>
         </div>
         <div class="form-group col-md-2">
           <label for="inputZip">Zip</label>
-          <input v-model="zip" type="text" class="form-control" id="inputZip" />
+          <input v-model="credentials.zip" type="text" class="form-control" id="inputZip" />
         </div>
       </div>
-      <button class="btn btn-primary" @click="submitCredentials">Sign in</button>
+      <button type="button" class="btn btn-primary" @click="submitCredentials">Create account</button>
     </form>
   </div>
 </template>
@@ -64,29 +69,39 @@
 export default {
   data() {
     return {
-      email: "",
-      password: "",
-      adress: "",
-      adress2: "",
-      city: "",
-      country: "",
-      zip: ""
+      credentials: {
+        email: "",
+        password: "",
+        adress: "",
+        adress2: "",
+        city: "",
+        country: "",
+        zip: ""
+      }
     };
+  },
+  created() {
+    console.log(this.existingCredentials);
+    this.credentials = this.existingCredentials;
+  },
+  computed: {
+    existingCredentials() {
+      return this.$store.getters.credentials;
+    }
+  },
+  methods: {
+    submitCredentials() {
+      const orderInfo = {
+        email: this.email,
+        password: this.password,
+        adress: this.adress,
+        adress2: this.adress2,
+        city: this.city,
+        country: this.country,
+        zip: this.zip
+      };
+      this.$store.dispatch("submitCredentials_Store", orderInfo);
+    }
   }
-  // methods: {
-  //   submitCredentials() {
-  //     console.log("wait");
-  //     // const orderInfo = {
-  //     //   email: this.email,
-  //     //   password: this.password,
-  //     //   adress: this.adress,
-  //     //   adress2: this.adress2,
-  //     //   city: this.city,
-  //     //   country: this.country,
-  //     //   zip: this.zip
-  //     // };
-  //     // this.$store.dispatch("submitCredentials_Store", orderInfo);
-  //   }
-  // }
 };
 </script>

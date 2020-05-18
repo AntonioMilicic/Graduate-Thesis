@@ -7,12 +7,12 @@
     <hr />
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="exampleInputEmail1">Email address</label>
+        <label for="inputEmail">Email address</label>
         <input
           v-model="email"
           type="email"
           class="form-control"
-          id="exampleInputEmail1"
+          id="inputEmail"
           aria-describedby="emailHelp"
         />
         <small
@@ -21,11 +21,11 @@
         >We'll never share your email with anyone else.</small>
       </div>
       <div class="form-group col-md-6">
-        <label for="exampleInputPassword1">Password</label>
-        <input v-model="password" type="password" class="form-control" id="exampleInputPassword1" />
+        <label for="inputPassword">Password</label>
+        <input v-model="password" type="password" class="form-control" id="inputPassword" />
       </div>
     </div>
-    <button type="submit" class="btn btn-primary" @click="submitLogin">Submit</button>
+    <button type="button" class="btn btn-primary" @click="submitLogin">Submit</button>
   </form>
 </template>
 
@@ -36,15 +36,15 @@ export default {
       email: "",
       password: ""
     };
+  },
+  methods: {
+    submitLogin() {
+      const orderInfo = {
+        email: this.email,
+        password: this.password
+      };
+      this.$store.dispatch("submitLogin_Store", orderInfo);
+    }
   }
-  // methods: {
-  //   submitLogin() {
-  //     const orderInfo = {
-  //       email: this.email,
-  //       password: this.password
-  //     };
-  //     this.$store.dispatch("submitLogin_Store", orderInfo);
-  //   }
-  // }
 };
 </script>

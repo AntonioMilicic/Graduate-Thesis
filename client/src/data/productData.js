@@ -6,8 +6,10 @@ export default [
     quantity: 10,
     description: "Neki opis proizvoda kroz par linija",
     category: "car",
-    location: "Zagerb",
+    location: "Zagerb", // povuc iz db korisnika
+    owner: "",
     imgSrc: require("../assets/images/cat1.jpg"),
+    // imgesSrc: ["", "", ""],
   },
   {
     id: 2,

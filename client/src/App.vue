@@ -7,7 +7,11 @@
       </transition>
     </div>
     <transition name="slide" mode="out-in">
-      <div class="back-to-top-container" @click="goToTop" v-if="windowScrollVisible">
+      <div
+        class="back-to-top-container"
+        @click="goToTop"
+        v-if="windowScrollVisible"
+      >
         <font-awesome-icon icon="angle-double-up" class="back-to-top-button" />
       </div>
     </transition>
@@ -20,11 +24,11 @@ import Header from "./components/header.vue";
 export default {
   data() {
     return {
-      windowScrollVisible: false
+      windowScrollVisible: false,
     };
   },
   components: {
-    appHeader: Header
+    appHeader: Header,
   },
   created() {
     this.$store.dispatch("initProducts");
@@ -41,8 +45,8 @@ export default {
       if (window.pageYOffset > window.innerHeight / 3) {
         this.windowScrollVisible = true;
       } else this.windowScrollVisible = false;
-    }
-  }
+    },
+  },
 };
 </script>
 
