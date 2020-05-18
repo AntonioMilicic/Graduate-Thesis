@@ -25,7 +25,7 @@
         <input v-model="password" type="password" class="form-control" id="exampleInputPassword1" />
       </div>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" @click="submitLogin">Submit</button>
   </form>
 </template>
 
@@ -36,6 +36,15 @@ export default {
       email: "",
       password: ""
     };
+  },
+  methods: {
+    submitLogin() {
+      const orderInfo = {
+        email: this.email,
+        password: this.password
+      };
+      this.$store.dispatch("submitLogin_Store", orderInfo);
+    }
   }
 };
 </script>

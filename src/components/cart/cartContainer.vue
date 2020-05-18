@@ -1,8 +1,8 @@
 <template>
   <div class="row row-cols-1">
-    <h1 class="empty-warning" v-if="this.selectedProducts.length == 0">Your cart is empty &#128527;</h1>
+    <h1 class="empty-warning" v-if="selectedProducts.length == 0">Your cart is empty &#128527;</h1>
     <app-cart-product v-for="product in selectedProducts" :key="product.id" :cartProduct="product" />
-    <div class="btn-container" v-if="!this.selectedProducts.length == 0">
+    <div class="btn-container" v-if="!selectedProducts.length == 0">
       <button type="button" class="btn-danger float-right btn-checkout" @click="clearCart">
         Clear cart
         <font-awesome-icon icon="trash" />

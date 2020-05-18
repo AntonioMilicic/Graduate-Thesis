@@ -44,8 +44,8 @@
           <input v-model="city" type="text" class="form-control" id="inputCity" />
         </div>
         <div class="form-group col-md-4">
-          <label for="inputState">State</label>
-          <select v-model="state" id="inputState" class="form-control">
+          <label for="inputCountry">Country</label>
+          <select v-model="country" id="inputCountry" class="form-control">
             <option selected>Choose...</option>
             <option>...</option>
           </select>
@@ -55,7 +55,7 @@
           <input v-model="zip" type="text" class="form-control" id="inputZip" />
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">Sign in</button>
+      <button class="btn btn-primary" @click="submitCredentials">Sign in</button>
     </form>
   </div>
 </template>
@@ -69,9 +69,24 @@ export default {
       adress: "",
       adress2: "",
       city: "",
-      state: "",
+      country: "",
       zip: ""
     };
+  },
+  methods: {
+    submitCredentials() {
+      console.log("wait");
+      // const orderInfo = {
+      //   email: this.email,
+      //   password: this.password,
+      //   adress: this.adress,
+      //   adress2: this.adress2,
+      //   city: this.city,
+      //   country: this.country,
+      //   zip: this.zip
+      // };
+      // this.$store.dispatch("submitCredentials_Store", orderInfo);
+    }
   }
 };
 </script>
