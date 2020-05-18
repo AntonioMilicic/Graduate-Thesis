@@ -72,21 +72,21 @@ export default {
       country: "",
       zip: ""
     };
-  },
-  methods: {
-    submitCredentials() {
-      console.log("wait");
-      // const orderInfo = {
-      //   email: this.email,
-      //   password: this.password,
-      //   adress: this.adress,
-      //   adress2: this.adress2,
-      //   city: this.city,
-      //   country: this.country,
-      //   zip: this.zip
-      // };
-      // this.$store.dispatch("submitCredentials_Store", orderInfo);
-    }
   }
+  // methods: {
+  //   submitCredentials() {
+  //     console.log("wait");
+  //     // const orderInfo = {
+  //     //   email: this.email,
+  //     //   password: this.password,
+  //     //   adress: this.adress,
+  //     //   adress2: this.adress2,
+  //     //   city: this.city,
+  //     //   country: this.country,
+  //     //   zip: this.zip
+  //     // };
+  //     // this.$store.dispatch("submitCredentials_Store", orderInfo);
+  //   }
+  // }
 };
 </script>

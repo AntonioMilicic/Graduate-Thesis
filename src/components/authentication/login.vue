@@ -36,15 +36,15 @@ export default {
       email: "",
       password: ""
     };
-  },
-  methods: {
-    submitLogin() {
-      const orderInfo = {
-        email: this.email,
-        password: this.password
-      };
-      this.$store.dispatch("submitLogin_Store", orderInfo);
-    }
   }
+  // methods: {
+  //   submitLogin() {
+  //     const orderInfo = {
+  //       email: this.email,
+  //       password: this.password
+  //     };
+  //     this.$store.dispatch("submitLogin_Store", orderInfo);
+  //   }
+  // }
 };
 </script>
