@@ -32,6 +32,9 @@
     <button type="button" class="btn btn-primary" @click="submitLogin">
       Submit
     </button>
+    <h6 style="text-align: center" v-if="badCredentials">
+      Please make sure your username and password match &#x1F615;
+    </h6>
   </form>
 </template>
 
@@ -43,19 +46,24 @@ export default {
     return {
       email: "",
       password: "",
+      badCredentials: false,
     };
   },
   methods: {
     async submitLogin() {
-      // const orderInfo = {
-      //   email: this.email,
-      //   password: this.password
-      // };
       const loginStatus = await postLogin(this.email, this.password);
-      if (loginStatus == null) {
-        console.log("NULL");
-      } else console.log("loginStatus", loginStatus);
-      // this.$store.dispatch("submitLogin_Store", orderInfo);
+      if (loginStatus === null) {
+        this.email = "";
+        this.password = "";
+        this.badCredentials = true;
+      } else {
+        console.log("loginStatus", loginStatus);
+        this.$store.dispatch("submitUser_Store", loginStatus);
+        this.$router.push({
+          path: "/profile",
+          query: { user: loginStatus.username },
+        });
+      }
     },
   },
 };

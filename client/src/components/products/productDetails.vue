@@ -4,26 +4,25 @@
       <div class="product-detail-user">
         <img :src="getProductDetail.imgSrc" alt="user-img" class="user-image" />
         <ul class="user-detail">
-          <li>
-            <b>Name:</b> Test Ime
-          </li>
-          <li>
-            <b>Email:</b> test@mail.com
-          </li>
-          <li>
-            <b>Posts:</b> 104
-          </li>
+          <li><b>Name:</b> Test Ime</li>
+          <li><b>Email:</b> test@mail.com</li>
+          <li><b>Posts:</b> 104</li>
         </ul>
-        <button type="button" class="btn-back" @click="()=>$router.go(-1)">Back</button>
+        <button type="button" class="btn-back" @click="() => $router.go(-1)">
+          Back
+        </button>
       </div>
       <div class="product-content">
-        <h2>{{getProductDetail.title}}</h2>
+        <h2>{{ getProductDetail.title }}</h2>
         <hr />
         <div class="float-left">
-          <p>Price: {{getProductDetail.price}} | On Stock: {{getProductDetail.quantity}}</p>
-          <span>{{getProductDetail.category}}</span>
-          <span>{{getProductDetail.location}}</span>
-          <p class="product-description">{{getProductDetail.description}}</p>
+          <p>
+            Price: {{ getProductDetail.price }} | On Stock:
+            {{ getProductDetail.quantity }}
+          </p>
+          <span>{{ getProductDetail.category }}</span>
+          <span>{{ getProductDetail.location }}</span>
+          <p class="product-description">{{ getProductDetail.description }}</p>
         </div>
         <div class="float-right">
           <div>
@@ -41,10 +40,10 @@
               class="btn btn-success add-cart"
               @click="addToCart"
               :disabled="
-              quantity === 0 ||
-                quantity > getProductDetail.quantity ||
-                !Number.isInteger(quantity)
-            "
+                quantity === 0 ||
+                  quantity > getProductDetail.quantity ||
+                  !Number.isInteger(quantity)
+              "
             >
               <span>
                 Add To Cart
@@ -54,7 +53,11 @@
           </div>
         </div>
         <div class="img-center">
-          <img :src="getProductDetail.imgSrc" alt="product-img" class="product-img" />
+          <img
+            :src="getProductDetail.imgSrc"
+            alt="product-img"
+            class="product-img"
+          />
         </div>
       </div>
     </div>
@@ -65,29 +68,29 @@
 export default {
   data() {
     return {
-      quantity: 0
+      quantity: 0,
     };
   },
   computed: {
     getProductDetail() {
       return this.$store.getters.productDetail(parseInt(this.$route.params.id));
-    }
+    },
   },
   methods: {
     addToCart() {
       const orderInfo = {
         productId: this.getProductDetail.id,
         quantitySelected: this.quantity,
-        price: this.getProductDetail.price
+        price: this.getProductDetail.price,
       };
       this.$store.dispatch("addToCart_Store", orderInfo);
       this.quantity = 0;
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style scoped>
+<style>
 .product-detail-container {
   min-height: 100%;
   width: 100%;

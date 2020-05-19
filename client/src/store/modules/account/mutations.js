@@ -1,3 +1,3 @@
-export const SUBMIT_CREDENTIALS = (state, payload) => {
-  state.credentials = payload;
+export const SUBMIT_USER = (state, payload) => {
+  state.userData = payload;
 };

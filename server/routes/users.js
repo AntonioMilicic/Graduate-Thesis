@@ -1,4 +1,4 @@
-const Users = require("../models/Users");
+const User = require("../models/Users");
 
 // Get profile data
 function getUser(req, res, next) {
@@ -7,9 +7,23 @@ function getUser(req, res, next) {
       username: req.params.id,
     },
   };
-  Users.findOne(query)
+  User.findOne(query)
     .then((Users) => {
       res.jsend.success(Users);
+    })
+    .catch((err) => res.jsend.error(err));
+}
+
+function userAuth(req, res, next) {
+  const query = {
+    where: {
+      email: req.body.email,
+      password: req.body.password,
+    },
+  };
+  User.findOne(query)
+    .then((login) => {
+      res.jsend.success(login);
     })
     .catch((err) => res.jsend.error(err));
 }
@@ -64,4 +78,4 @@ function getUser(req, res, next) {
 //     .catch((err) => console.log(err));
 // }
 
-module.exports = { getUser };
+module.exports = { getUser, userAuth };

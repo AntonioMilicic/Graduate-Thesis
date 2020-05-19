@@ -3,16 +3,20 @@ import * as actions from "./actions";
 import * as getters from "./getters";
 
 const state = {
-  credentials: {
+  userData: {
+    first_name: "",
+    last_name: "",
+    username: "",
+    role: "",
     email: "",
     password: "",
-    adress: "",
-    adress2: "",
-    city: "",
     country: "",
+    city: "",
+    address: "",
+    house_number: "",
     zip: "",
+    image: "",
   },
-  login: {},
 };
 
 export default {

@@ -19,13 +19,24 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <router-link to="/" class="nav-item" active-class="active" exact tag="li">
+          <router-link
+            to="/"
+            class="nav-item"
+            active-class="active"
+            exact
+            tag="li"
+          >
             <a class="nav-link">
               Home
               <font-awesome-icon icon="home" />
             </a>
           </router-link>
-          <router-link to="/Products" class="nav-item" active-class="active" tag="li">
+          <router-link
+            to="/Products"
+            class="nav-item"
+            active-class="active"
+            tag="li"
+          >
             <a class="nav-link">
               Products
               <font-awesome-icon icon="archive" />
@@ -33,7 +44,12 @@
           </router-link>
         </ul>
         <ul class="navbar-nav ml-auto">
-          <router-link to="/Profile" class="nav-item" active-class="active" tag="li">
+          <router-link
+            to="/Profile"
+            class="nav-item"
+            active-class="active"
+            tag="li"
+          >
             <a class="nav-link">
               Profile
               <font-awesome-icon icon="male" />
@@ -54,14 +70,24 @@
               <font-awesome-icon icon="id-card-alt" />
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <router-link to="/Login" class="nav-item" active-class="active" tag="li">
+              <router-link
+                to="/Login"
+                class="nav-item"
+                active-class="active"
+                tag="li"
+              >
                 <a class="dropdown-item nav-link" href="#">
                   Login
                   <font-awesome-icon icon="sign-in-alt" />
                 </a>
               </router-link>
               <div class="dropdown-divider"></div>
-              <router-link to="/CreateAccount" class="nav-item" active-class="active" tag="li">
+              <router-link
+                to="/CreateAccount"
+                class="nav-item"
+                active-class="active"
+                tag="li"
+              >
                 <a class="dropdown-item nav-link" href="#">
                   Create Account
                   <font-awesome-icon icon="user-tie" />
@@ -69,7 +95,12 @@
               </router-link>
             </div>
           </li>
-          <router-link to="/Cart" class="nav-item" active-class="active" tag="li">
+          <router-link
+            to="/Cart"
+            class="nav-item"
+            active-class="active"
+            tag="li"
+          >
             <a class="nav-link">
               Cart
               <font-awesome-icon icon="shopping-cart" />
@@ -86,7 +117,7 @@ export default {
   data() {
     return {};
   },
-  methods: {}
+  methods: {},
 };
 </script>
 
