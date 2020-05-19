@@ -1,6 +1,7 @@
 import Vue from "vue";
 import App from "./App";
 import VueRouter from "vue-router";
+import axios from "axios";
 
 import { routes } from "./router/routes";
 import store from "./store/store";
@@ -49,6 +50,8 @@ Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.filter("currency", (value) => {
   return "$" + value.toLocaleString();
 });
+
+axios.defaults.baseURL = "http://localhost:5000/api";
 
 Vue.config.productionTip = false;
 
