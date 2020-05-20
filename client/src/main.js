@@ -24,6 +24,7 @@ import {
   faList,
   faSearch,
   faAngleDoubleUp,
+  faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -43,7 +44,8 @@ library.add(
   faTrash,
   faList,
   faSearch,
-  faAngleDoubleUp
+  faAngleDoubleUp,
+  faSignOutAlt
 );
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 

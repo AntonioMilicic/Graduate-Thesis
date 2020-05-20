@@ -14,7 +14,7 @@ const state = {
     city: "",
     address: "",
     house_number: "",
-    zip: "",
+    zip_code: "",
     image: "",
   },
 };

@@ -8,3 +8,12 @@ export async function postLogin(email, password) {
 
   return responseData;
 }
+
+export async function postCredentials(payload) {
+  const data = { ...payload };
+
+  const response = await axios.post("/create", data);
+  const responseData = response.data.data;
+
+  return responseData;
+}

@@ -1,81 +1,72 @@
-const User = require("../models/Users");
+const { Users, UsersNeededData } = require("../models/Users");
 
 // Get profile data
-function getUser(req, res, next) {
+function getUser(req, res) {
   const query = {
     where: {
       username: req.params.id,
     },
   };
-  User.findOne(query)
-    .then((Users) => {
-      res.jsend.success(Users);
+  UsersNeededData.findOne(query)
+    .then((user) => {
+      res.jsend.success(user);
     })
     .catch((err) => res.jsend.error(err));
 }
 
-function userAuth(req, res, next) {
+// Post user authentification
+function userAuth(req, res) {
   const query = {
     where: {
       email: req.body.email,
       password: req.body.password,
     },
   };
-  User.findOne(query)
-    .then((login) => {
-      res.jsend.success(login);
+  // If user is found, dont return password with packet
+  Users.findOne(query)
+    .then((user) => {
+      if (user != null) {
+        user.password = null;
+        res.jsend.success(user);
+      } else res.jsend.error(user);
     })
     .catch((err) => res.jsend.error(err));
 }
 
-// Add user
-// function addUser(req, res, next) {
-//   const data = {
-//     first_name: "Toni",
-//     last_name: "Milicic",
-//     username: "Laseen",
-//     role: "Admin",
-//     email: "toni@mail.com",
-//     password: "password",
-//     country: "Croatia",
-//     city: "Trogir",
-//     address: "Betanija",
-//     house_number: "15",
-//     zip_code: "21220",
-//     image: "../assets/images/user-toni.jpg",
-//   };
-//   let {
-//     first_name,
-//     last_name,
-//     username,
-//     role,
-//     email,
-//     password,
-//     country,
-//     city,
-//     adress,
-//     house_number,
-//     zip_code,
-//     image,
-//   } = data;
-//   // Insert into table
+// Create new user
+function addUser(req, res) {
+  const queryCheck = {
+    where: {
+      first_name: req.body.firstName,
+      last_name: req.body.lastName,
+      username: req.body.username,
+      email: req.body.email,
+    },
+  };
+  const query = {
+    first_name: req.body.firstName,
+    last_name: req.body.lastName,
+    username: req.body.username,
+    role: req.body.role,
+    email: req.body.email,
+    password: req.body.password,
+    country: req.body.country,
+    city: req.body.city,
+    address: req.body.address,
+    house_number: req.body.houseNumber,
+    zip_code: req.body.zipCode,
+    image: req.body.image,
+  };
 
-//   Users.create({
-//     first_name,
-//     last_name,
-//     username,
-//     role,
-//     email,
-//     password,
-//     country,
-//     city,
-//     adress,
-//     house_number,
-//     zip_code,
-//     image,
-//   })
-//     .then((user) => res.redirect("/"))
-//     .catch((err) => console.log(err));
-// }
+  Users.findOne(queryCheck)
+    .then((created) => {
+      if (created == null) {
+        Users.create(query)
+          .then(() => res.jsend.success("success"))
+          .catch((err) => res.jsend.error(err));
+      } else res.jsend.error(created);
+    })
+    .catch((err) => res.jsend.error(err));
+}
 
-module.exports = { getUser, userAuth };
+module.exports = { getUser, userAuth, addUser };

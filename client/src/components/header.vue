@@ -19,24 +19,13 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <router-link
-            to="/"
-            class="nav-item"
-            active-class="active"
-            exact
-            tag="li"
-          >
+          <router-link to="/" class="nav-item" active-class="active" exact tag="li">
             <a class="nav-link">
               Home
               <font-awesome-icon icon="home" />
             </a>
           </router-link>
-          <router-link
-            to="/Products"
-            class="nav-item"
-            active-class="active"
-            tag="li"
-          >
+          <router-link to="/Products" class="nav-item" active-class="active" tag="li">
             <a class="nav-link">
               Products
               <font-awesome-icon icon="archive" />
@@ -45,7 +34,8 @@
         </ul>
         <ul class="navbar-nav ml-auto">
           <router-link
-            to="/Profile"
+            :to="profilePath"
+            v-if="userName"
             class="nav-item"
             active-class="active"
             tag="li"
@@ -56,7 +46,13 @@
               <font-awesome-icon icon="female" />
             </a>
           </router-link>
-          <li class="nav-item dropdown">
+          <li v-if="userName" class="nav-item" style="cursor: pointer;">
+            <a class="nav-link" @click="clearStoreAccState">
+              Sign-out
+              <font-awesome-icon icon="sign-out-alt" />
+            </a>
+          </li>
+          <li v-show="!userName" class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
               href="#"
@@ -70,24 +66,14 @@
               <font-awesome-icon icon="id-card-alt" />
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <router-link
-                to="/Login"
-                class="nav-item"
-                active-class="active"
-                tag="li"
-              >
+              <router-link to="/SignIn" class="nav-item" active-class="active" tag="li">
                 <a class="dropdown-item nav-link" href="#">
-                  Login
+                  Sign-in
                   <font-awesome-icon icon="sign-in-alt" />
                 </a>
               </router-link>
               <div class="dropdown-divider"></div>
-              <router-link
-                to="/CreateAccount"
-                class="nav-item"
-                active-class="active"
-                tag="li"
-              >
+              <router-link to="/CreateAccount" class="nav-item" active-class="active" tag="li">
                 <a class="dropdown-item nav-link" href="#">
                   Create Account
                   <font-awesome-icon icon="user-tie" />
@@ -95,12 +81,7 @@
               </router-link>
             </div>
           </li>
-          <router-link
-            to="/Cart"
-            class="nav-item"
-            active-class="active"
-            tag="li"
-          >
+          <router-link to="/Cart" class="nav-item" active-class="active" tag="li">
             <a class="nav-link">
               Cart
               <font-awesome-icon icon="shopping-cart" />
@@ -113,11 +94,25 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {};
   },
-  methods: {},
+  computed: {
+    ...mapGetters(["userName"]),
+    profilePath() {
+      return "/Profile/" + this.userName;
+    }
+  },
+  methods: {
+    clearStoreAccState() {
+      this.$store.dispatch("clearAccountSate_Store");
+      this.$router.push({
+        path: "/"
+      });
+    }
+  }
 };
 </script>
 
