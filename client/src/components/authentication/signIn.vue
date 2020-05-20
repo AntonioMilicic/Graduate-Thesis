@@ -54,7 +54,6 @@ export default {
     async submitLogin() {
       const loginStatus = await postLogin(this.email, this.password);
       if (loginStatus === undefined) {
-        this.email = "";
         this.password = "";
         this.badCredentials = true;
       } else {

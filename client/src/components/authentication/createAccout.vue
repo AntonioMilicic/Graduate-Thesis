@@ -9,7 +9,7 @@
       style="text-align: center"
       v-if="badCredentials"
     >Seems like that account already exists &#x1F615;</h6>
-    <form>
+    <form onsubmit="return false">
       <small class="form-text text-muted" style="margin: 0 0 10px 10px;">Mandatory fields</small>
       <div class="form-row">
         <div class="form-group col-md-6">
@@ -131,7 +131,7 @@
         </div>
         <div class="form-group col-md-3">
           <button
-            type="button"
+            type="submit"
             style="margin-top: 32px; float: right"
             class="btn btn-primary"
             @click="submitCredentials"
