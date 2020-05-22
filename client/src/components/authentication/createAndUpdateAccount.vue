@@ -61,17 +61,21 @@
           <input
             v-model="credentials.password"
             type="password"
-            class="form-control"
+            class="form-control inputPassword"
             id="inputPassword"
             required
           />
+          <span id="passwordShow" class="form-text text-muted" @click="showPassword">
+            <input id="checkbox" type="checkbox" aria-label="Checkbox for password show" />
+            <label for="checkbox">Show password?</label>
+          </span>
         </div>
         <div class="form-group col-md-6">
           <label for="inputPasswordRe">Re-enter Password</label>
           <input
             v-model="credentials.passwordRe"
             type="password"
-            class="form-control"
+            class="form-control inputPassword"
             id="inputPasswordRe"
             required
           />
@@ -236,6 +240,15 @@ export default {
           });
         }
       } else return;
+    },
+    showPassword() {
+      const checkbox = document.getElementById("checkbox");
+      const passwordField = document.getElementsByClassName("inputPassword");
+      if (checkbox.checked === true) {
+        passwordField.forEach(element => (element.type = "text"));
+      } else {
+        passwordField.forEach(element => (element.type = "password"));
+      }
     }
   }
 };

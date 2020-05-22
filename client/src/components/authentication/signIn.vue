@@ -4,21 +4,15 @@
       Please login
       <font-awesome-icon icon="lock" />
     </h4>
+    <h6
+      style="text-align: center"
+      v-if="badCredentials"
+    >Please make sure your username and password match &#x1F615;</h6>
     <hr />
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="inputEmail">Email address</label>
-        <input
-          v-model="email"
-          type="email"
-          class="form-control"
-          id="inputEmail"
-          aria-describedby="emailHelp"
-        />
-        <small
-          id="emailHelp"
-          class="form-text text-muted"
-        >We'll never share your email with anyone else.</small>
+        <input v-model="email" type="email" class="form-control" id="inputEmail" />
       </div>
       <div class="form-group col-md-6">
         <label for="inputPassword">Password</label>
@@ -29,13 +23,13 @@
           id="inputPassword"
           @keyup.enter="submitLogin"
         />
+        <span id="passwordShow" class="form-text text-muted" @click="showPassword">
+          <input id="checkbox" type="checkbox" aria-label="Checkbox for password show" />
+          <label for="checkbox">Show password?</label>
+        </span>
       </div>
     </div>
-    <button type="button" class="btn btn-primary" @click="submitLogin">Submit</button>
-    <h6
-      style="text-align: center"
-      v-if="badCredentials"
-    >Please make sure your username and password match &#x1F615;</h6>
+    <button type="button" class="btn btn-primary float-right" @click="submitLogin">Submit</button>
   </form>
 </template>
 
@@ -63,6 +57,13 @@ export default {
           path: path
         });
       }
+    },
+    showPassword() {
+      const checkbox = document.getElementById("checkbox");
+      const passwordField = document.getElementById("inputPassword");
+      if (checkbox.checked === true) {
+        passwordField.type = "text";
+      } else passwordField.type = "password";
     }
   }
 };
