@@ -4,17 +4,16 @@ import * as getters from "./getters";
 
 const state = {
   userData: {
-    first_name: "",
-    last_name: "",
+    firstName: "",
+    lastName: "",
     username: "",
     role: "",
     email: "",
-    password: "",
     country: "",
     city: "",
     address: "",
-    house_number: "",
-    zip_code: "",
+    houseNumber: "",
+    zipCode: "",
     image: "",
   },
 };

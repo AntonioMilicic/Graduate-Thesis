@@ -1,7 +1,7 @@
 <template>
   <div class="col mb-2">
     <div class="card card-design">
-      <router-link :to="link">
+      <router-link :to="path">
         <div class="card-img-container">
           <img class="card-img-top" alt="card-img" :src="product.imgSrc" />
         </div>
@@ -51,7 +51,7 @@ export default {
     return {
       quantity: 1,
       toolTipText: "",
-      link: "Products/Product-" + this.product.id
+      path: "Products/Product-" + this.product.id
     };
   },
   props: ["product"],

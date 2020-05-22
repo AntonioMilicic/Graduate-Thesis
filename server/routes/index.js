@@ -10,6 +10,7 @@ router.use(jsend.middleware);
 router.get("/products", product.get);
 router.get("/users/:id", user.getUser);
 router.post("/login", user.userAuth);
-router.post("/create", user.addUser);
+router.post("/createAccount", user.addUser);
+router.post("/updateAccount", user.updateUser);
 
 module.exports = router;

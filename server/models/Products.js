@@ -2,8 +2,8 @@ const Sequelize = require("sequelize");
 const db = require("../config/database");
 
 const Products = db.define("product", {
-  owner: {
-    type: Sequelize.STRING,
+  userId: {
+    type: Sequelize.INTEGER,
   },
   title: {
     type: Sequelize.STRING,
@@ -24,5 +24,9 @@ const Products = db.define("product", {
     type: Sequelize.ARRAY(Sequelize.STRING),
   },
 });
+//Product has one owner
+Products.associate = function(models) {
+  Products.belongsTo(models.Users);
+};
 
 module.exports = Products;

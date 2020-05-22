@@ -1,4 +1,4 @@
-const { Users, UsersNeededData } = require("../models/Users");
+const Users = require("../models/Users");
 
 // Get profile data
 function getUser(req, res) {
@@ -7,9 +7,12 @@ function getUser(req, res) {
       username: req.params.id,
     },
   };
-  UsersNeededData.findOne(query)
+  Users.findOne(query)
     .then((user) => {
-      res.jsend.success(user);
+      if (user != null) {
+        user.password = null;
+        res.jsend.success(user);
+      } else res.jsend.error(user);
     })
     .catch((err) => res.jsend.error(err));
 }
@@ -37,15 +40,15 @@ function userAuth(req, res) {
 function addUser(req, res) {
   const queryCheck = {
     where: {
-      first_name: req.body.firstName,
-      last_name: req.body.lastName,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
       username: req.body.username,
       email: req.body.email,
     },
   };
   const query = {
-    first_name: req.body.firstName,
-    last_name: req.body.lastName,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
     username: req.body.username,
     role: req.body.role,
     email: req.body.email,
@@ -53,20 +56,48 @@ function addUser(req, res) {
     country: req.body.country,
     city: req.body.city,
     address: req.body.address,
-    house_number: req.body.houseNumber,
-    zip_code: req.body.zipCode,
+    houseNumber: req.body.houseNumber,
+    zipCode: req.body.zipCode,
     image: req.body.image,
   };
 
   Users.findOne(queryCheck)
-    .then((created) => {
-      if (created == null) {
+    .then((exists) => {
+      if (exists == null) {
         Users.create(query)
           .then(() => res.jsend.success("success"))
           .catch((err) => res.jsend.error(err));
-      } else res.jsend.error(created);
+      } else res.jsend.error(exists);
     })
     .catch((err) => res.jsend.error(err));
 }
 
-module.exports = { getUser, userAuth, addUser };
+// Update user data
+async function updateUser(req, res) {
+  const queryCheck = {
+    where: {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      username: req.body.username,
+    },
+  };
+
+  const user = await Users.findOne(queryCheck);
+
+  if (user != null) {
+    user.role = req.body.role;
+    user.email = req.body.email;
+    user.password = req.body.password;
+    user.country = req.body.country;
+    user.city = req.body.city;
+    user.address = req.body.address;
+    user.houseNumber = req.body.houseNumber;
+    user.zipCode = req.body.zipCode;
+    user.image = req.body.image;
+
+    user.save();
+    console.log(user);
+    res.jsend.success(user);
+  } else res.jsend.error(user);
+}
+module.exports = { getUser, userAuth, addUser, updateUser };

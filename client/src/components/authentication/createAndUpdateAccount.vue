@@ -5,14 +5,14 @@
       <font-awesome-icon icon="user-shield" />
     </h4>
     <hr />
-    <h6
+    <h5
       style="text-align: center"
       v-if="badCredentials"
-    >Seems like that account already exists &#x1F615;</h6>
+    >Seems like account with exact username or email already exists &#x1F615;</h5>
     <form onsubmit="return false">
       <small class="form-text text-muted" style="margin: 0 0 10px 10px;">Mandatory fields</small>
       <div class="form-row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6" v-if="showCreate">
           <label for="inputFirstName">First name</label>
           <input
             v-model="credentials.firstName"
@@ -22,7 +22,7 @@
             required
           />
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6" v-if="showCreate">
           <label for="inputLastName">Last name</label>
           <input
             v-model="credentials.lastName"
@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="form-row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6" v-if="showCreate">
           <label for="inputUsername">Username</label>
           <input
             v-model="credentials.username"
@@ -131,11 +131,19 @@
         </div>
         <div class="form-group col-md-3">
           <button
+            v-if="showCreate"
             type="submit"
             style="margin-top: 32px; float: right"
             class="btn btn-primary"
-            @click="submitCredentials"
+            @click="submitCredentials('create')"
           >Create account</button>
+          <button
+            v-if="!showCreate"
+            type="submit"
+            style="margin-top: 32px; float: right"
+            class="btn btn-primary"
+            @click="submitCredentials('update')"
+          >Update account</button>
         </div>
       </div>
     </form>
@@ -143,7 +151,10 @@
 </template>
 
 <script>
-import { postCredentials } from "./server_communication/userController";
+import {
+  postCredentials,
+  postUpdateCredentials
+} from "./server_communication/userController";
 
 export default {
   data() {
@@ -163,8 +174,26 @@ export default {
         image: "",
         role: ""
       },
-      badCredentials: false
+      badCredentials: false,
+      showCreate: false
     };
+  },
+  created() {
+    // Push to frontpage if user is not signed but he is on update profile page
+    if (
+      this.existingCredentials.username == "" &&
+      this.$route.path != "/CreateAccount"
+    ) {
+      this.$router.push({
+        path: "/"
+      });
+    }
+    // Show update or create button
+    if (this.$route.path == "/CreateAccount") {
+      this.showCreate = true;
+    } else this.showCreate = false;
+
+    this.credentials = this.existingCredentials;
   },
   computed: {
     existingCredentials() {
@@ -172,48 +201,41 @@ export default {
     }
   },
   methods: {
-    async submitCredentials() {
+    async submitCredentials(command) {
+      let serverResponse = "";
       if (
-        this.credentials.password != "" &&
-        this.credentials.firstName != "" &&
-        this.credentials.lastName != "" &&
-        this.credentials.username != "" &&
-        this.credentials.email != "" &&
-        this.credentials.password == this.credentials.passwordRe
-      ) {
-        const createStatus = await postCredentials(this.credentials);
-
-        if (createStatus == null) {
-          this.credentials = [];
-          this.badCredentials = true;
-        } else {
-          const path = "/profile/" + this.credentials.username;
-          const storeCredentials = {
-            first_name: this.credentials.firstName,
-            last_name: this.credentials.lastName,
-            username: this.credentials.username,
-            email: this.credentials.email,
-            country: this.credentials.country,
-            city: this.credentials.city,
-            address: this.credentials.address,
-            house_number: this.credentials.house_number,
-            zip_code: this.credentials.zipCode,
-            image: this.credentials.image,
-            role: this.credentials.role
-          };
-          this.$store.dispatch("submitUser_Store", storeCredentials);
-          this.$router.push({
-            path: path
-          });
-        }
-      } else if (
         this.credentials.password != "" &&
         this.credentials.password != this.credentials.passwordRe
       ) {
         alert("Passwords must match!");
         this.credentials.password = "";
         this.credentials.passwordRe = "";
-      }
+      } else if (
+        this.credentials.password != "" &&
+        this.credentials.passwordRe != "" &&
+        this.credentials.firstName != "" &&
+        this.credentials.lastName != "" &&
+        this.credentials.username != "" &&
+        this.credentials.email != "" &&
+        this.credentials.password == this.credentials.passwordRe
+      ) {
+        if (command == "create") {
+          serverResponse = await postCredentials(this.credentials);
+        } else if (command == "update") {
+          serverResponse = await postUpdateCredentials(this.credentials);
+        }
+        if (serverResponse == null) {
+          this.badCredentials = true;
+          document.body.scrollTop = document.documentElement.scrollTop = 0;
+        } else {
+          this.$store.dispatch("submitUser_Store", this.credentials);
+
+          const path = "/Profile/" + this.credentials.username;
+          this.$router.push({
+            path: path
+          });
+        }
+      } else return;
     }
   }
 };

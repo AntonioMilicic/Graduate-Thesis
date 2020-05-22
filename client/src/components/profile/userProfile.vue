@@ -6,7 +6,11 @@
         <ul class="user-detail">
           <li>
             <b>Name:</b>
-            {{ userData.first_name }} {{ userData.last_name }}
+            {{ userData.firstName }} {{ userData.lastName }}
+          </li>
+          <li>
+            <b>User:</b>
+            {{ userData.username }}
           </li>
           <li>
             <b>Email:</b>
@@ -22,14 +26,19 @@
           </li>
           <li>
             <b>Address:</b>
-            {{ userData.address }}, {{ userData.house_number }}
+            {{ userData.address }}, {{ userData.houseNumber }}
           </li>
           <li>
             <b>ZIP:</b>
-            {{ userData.zip_code }}
+            {{ userData.zipCode }}
           </li>
         </ul>
-        <button type="button" class="btn-back" @click="() => $router.go(-1)">Back</button>
+        <router-link :to="userData.username+'/Update-Profile'">
+          <button type="button" class="btn btn-primary btn-profile-field">Update profile</button>
+        </router-link>
+        <router-link :to="userData.username+'/Create-Product'">
+          <button type="button" class="btn btn-primary btn-profile-field">Create product</button>
+        </router-link>
       </div>
     </div>
   </div>
@@ -49,3 +58,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.btn-profile-field {
+  margin: 10px 0 10px 0;
+  width: 132px;
+}
+</style>

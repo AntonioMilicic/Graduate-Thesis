@@ -57,7 +57,7 @@ export default {
         this.password = "";
         this.badCredentials = true;
       } else {
-        const path = "/profile/" + loginStatus.username;
+        const path = "/Profile/" + loginStatus.username;
         this.$store.dispatch("submitUser_Store", loginStatus);
         this.$router.push({
           path: path
