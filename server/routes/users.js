@@ -10,7 +10,7 @@ function getUser(req, res) {
   Users.findOne(query)
     .then((user) => {
       if (user != null) {
-        user.password = null;
+        user.password = "";
         res.jsend.success(user);
       } else res.jsend.error(user);
     })
@@ -29,7 +29,7 @@ function userAuth(req, res) {
   Users.findOne(query)
     .then((user) => {
       if (user != null) {
-        user.password = null;
+        user.password = "";
         res.jsend.success(user);
       } else res.jsend.error(user);
     })
@@ -85,8 +85,7 @@ async function updateUser(req, res) {
   const user = await Users.findOne(queryCheck);
 
   if (user != null) {
-    user.role = req.body.role;
-    user.email = req.body.email;
+    if (req.body.email) user.role = req.body.role;
     user.password = req.body.password;
     user.country = req.body.country;
     user.city = req.body.city;

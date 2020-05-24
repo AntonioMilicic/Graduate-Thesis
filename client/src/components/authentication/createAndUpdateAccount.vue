@@ -46,7 +46,7 @@
             required
           />
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6" v-if="showCreate">
           <label for="inputEmail">Email</label>
           <input
             v-model="credentials.email"
@@ -66,6 +66,7 @@
             type="password"
             class="form-control inputPassword"
             :class="{'invalid-credentials': badPassword || badCredentials}"
+            @change="badPassword = false"
             id="inputPassword"
             required
           />
@@ -231,10 +232,6 @@ export default {
         }
         if (serverResponse == null) {
           this.badCredentials = true;
-          data.username = "";
-          data.email = "";
-          data.password = "";
-          data.passwordRe = "";
           document.body.scrollTop = document.documentElement.scrollTop = 0;
         } else {
           this.$store.dispatch("submitUser_Store", data);
@@ -244,7 +241,7 @@ export default {
             path: path
           });
         }
-      } else console.log("wtf");
+      }
     },
     showPassword() {
       const checkbox = document.getElementById("checkbox");
