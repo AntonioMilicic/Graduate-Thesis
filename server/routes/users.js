@@ -46,20 +46,7 @@ function addUser(req, res) {
       email: req.body.email,
     },
   };
-  const query = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    username: req.body.username,
-    role: req.body.role,
-    email: req.body.email,
-    password: req.body.password,
-    country: req.body.country,
-    city: req.body.city,
-    address: req.body.address,
-    houseNumber: req.body.houseNumber,
-    zipCode: req.body.zipCode,
-    image: req.body.image,
-  };
+  const query = { ...req.body };
 
   Users.findOne(queryCheck)
     .then((exists) => {
@@ -85,7 +72,7 @@ async function updateUser(req, res) {
   const user = await Users.findOne(queryCheck);
 
   if (user != null) {
-    if (req.body.email) user.role = req.body.role;
+    user.role = req.body.role;
     user.password = req.body.password;
     user.country = req.body.country;
     user.city = req.body.city;
@@ -95,7 +82,6 @@ async function updateUser(req, res) {
     user.image = req.body.image;
 
     user.save();
-    console.log(user);
     res.jsend.success(user);
   } else res.jsend.error(user);
 }

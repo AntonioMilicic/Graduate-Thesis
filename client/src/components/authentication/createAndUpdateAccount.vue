@@ -234,6 +234,7 @@ export default {
           this.badCredentials = true;
           document.body.scrollTop = document.documentElement.scrollTop = 0;
         } else {
+          delete data.passwordRe;
           this.$store.dispatch("submitUser_Store", data);
 
           const path = "/Profile/" + data.username;
