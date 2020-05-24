@@ -41,6 +41,7 @@
             type="text"
             class="form-control"
             :class="{'invalid-credentials': badCredentials}"
+            @change="badCredentials = false"
             id="inputUsername"
             required
           />
@@ -209,18 +210,18 @@ export default {
       let serverResponse = "";
       const data = this.credentials;
 
-      if (data.password != null && data.password != data.passwordRe) {
+      if (data.password != "" && data.password != data.passwordRe) {
         alert("Passwords must match!");
         data.password = "";
         data.passwordRe = "";
         this.badPassword = true;
       } else if (
-        data.password != null &&
-        data.passwordRe != null &&
-        data.firstName != null &&
-        data.lastName != null &&
-        data.username != null &&
-        data.email != null &&
+        data.password != "" &&
+        data.passwordRe != "" &&
+        data.firstName != "" &&
+        data.lastName != "" &&
+        data.username != "" &&
+        data.email != "" &&
         data.password == data.passwordRe
       ) {
         if (command == "create") {
@@ -243,7 +244,7 @@ export default {
             path: path
           });
         }
-      } else return;
+      } else console.log("wtf");
     },
     showPassword() {
       const checkbox = document.getElementById("checkbox");
