@@ -48,12 +48,20 @@
 import { mapGetters } from "vuex";
 
 export default {
+  created() {
+    if (this.userData.username == "") {
+      this.$router.push({
+        path: "/"
+      });
+    }
+  },
   computed: {
     ...mapGetters(["userData"])
   },
   methods: {
     imgURL(url) {
-      return require("../../assets/images" + url);
+      if (url[0] == "/") return require("../../assets/images" + url);
+      else return url;
     }
   }
 };

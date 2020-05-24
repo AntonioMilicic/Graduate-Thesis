@@ -1,7 +1,7 @@
 <template>
   <form>
     <h4>
-      Please login
+      Please sign in
       <font-awesome-icon icon="lock" />
     </h4>
     <h6
@@ -20,8 +20,9 @@
           v-model="password"
           type="password"
           class="form-control"
+          :class="{'invalid-password':badCredentials}"
           id="inputPassword"
-          @keyup.enter="submitLogin"
+          @keyup.enter="submitSignIn"
         />
         <span id="passwordShow" class="form-text text-muted" @click="showPassword">
           <input id="checkbox" type="checkbox" aria-label="Checkbox for password show" />
@@ -29,12 +30,12 @@
         </span>
       </div>
     </div>
-    <button type="button" class="btn btn-primary float-right" @click="submitLogin">Submit</button>
+    <button type="button" class="btn btn-primary float-right" @click="submitSignIn">Submit</button>
   </form>
 </template>
 
 <script>
-import { postLogin } from "./server_communication/userController";
+import { postSignIn } from "./server_communication/userController";
 
 export default {
   data() {
@@ -45,14 +46,14 @@ export default {
     };
   },
   methods: {
-    async submitLogin() {
-      const loginStatus = await postLogin(this.email, this.password);
-      if (loginStatus === undefined) {
+    async submitSignIn() {
+      const signInStatus = await postSignIn(this.email, this.password);
+      if (signInStatus === undefined) {
         this.password = "";
         this.badCredentials = true;
       } else {
-        const path = "/Profile/" + loginStatus.username;
-        this.$store.dispatch("submitUser_Store", loginStatus);
+        const path = "/Profile/" + signInStatus.username;
+        this.$store.dispatch("submitUser_Store", signInStatus);
         this.$router.push({
           path: path
         });
@@ -68,3 +69,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.invalid-password {
+  border: solid 1px red;
+}
+</style>

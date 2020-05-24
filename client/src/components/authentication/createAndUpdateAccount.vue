@@ -40,6 +40,7 @@
             v-model="credentials.username"
             type="text"
             class="form-control"
+            :class="{'invalid-credentials': badCredentials}"
             id="inputUsername"
             required
           />
@@ -50,6 +51,7 @@
             v-model="credentials.email"
             type="email"
             class="form-control"
+            :class="{'invalid-credentials': badCredentials}"
             id="inputEmail"
             required
           />
@@ -62,6 +64,7 @@
             v-model="credentials.password"
             type="password"
             class="form-control inputPassword"
+            :class="{'invalid-credentials': badPassword || badCredentials}"
             id="inputPassword"
             required
           />
@@ -76,6 +79,7 @@
             v-model="credentials.passwordRe"
             type="password"
             class="form-control inputPassword"
+            :class="{'invalid-credentials': badPassword || badCredentials}"
             id="inputPasswordRe"
             required
           />
@@ -155,6 +159,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import {
   postCredentials,
   postUpdateCredentials
@@ -178,16 +183,14 @@ export default {
         image: "",
         role: ""
       },
+      badPassword: false,
       badCredentials: false,
       showCreate: false
     };
   },
   created() {
     // Push to frontpage if user is not signed but he is on update profile page
-    if (
-      this.existingCredentials.username == "" &&
-      this.$route.path != "/CreateAccount"
-    ) {
+    if (this.exists.username == "" && this.$route.path != "/CreateAccount") {
       this.$router.push({
         path: "/"
       });
@@ -196,45 +199,46 @@ export default {
     if (this.$route.path == "/CreateAccount") {
       this.showCreate = true;
     } else this.showCreate = false;
-
-    this.credentials = this.existingCredentials;
+    this.credentials = { ...this.exists };
   },
   computed: {
-    existingCredentials() {
-      return this.$store.getters.userData;
-    }
+    ...mapGetters({ exists: "userData" })
   },
   methods: {
     async submitCredentials(command) {
       let serverResponse = "";
-      if (
-        this.credentials.password != "" &&
-        this.credentials.password != this.credentials.passwordRe
-      ) {
+      const data = this.credentials;
+
+      if (data.password != null && data.password != data.passwordRe) {
         alert("Passwords must match!");
-        this.credentials.password = "";
-        this.credentials.passwordRe = "";
+        data.password = "";
+        data.passwordRe = "";
+        this.badPassword = true;
       } else if (
-        this.credentials.password != "" &&
-        this.credentials.passwordRe != "" &&
-        this.credentials.firstName != "" &&
-        this.credentials.lastName != "" &&
-        this.credentials.username != "" &&
-        this.credentials.email != "" &&
-        this.credentials.password == this.credentials.passwordRe
+        data.password != null &&
+        data.passwordRe != null &&
+        data.firstName != null &&
+        data.lastName != null &&
+        data.username != null &&
+        data.email != null &&
+        data.password == data.passwordRe
       ) {
         if (command == "create") {
-          serverResponse = await postCredentials(this.credentials);
+          serverResponse = await postCredentials(data);
         } else if (command == "update") {
-          serverResponse = await postUpdateCredentials(this.credentials);
+          serverResponse = await postUpdateCredentials(data);
         }
         if (serverResponse == null) {
           this.badCredentials = true;
+          data.username = "";
+          data.email = "";
+          data.password = "";
+          data.passwordRe = "";
           document.body.scrollTop = document.documentElement.scrollTop = 0;
         } else {
-          this.$store.dispatch("submitUser_Store", this.credentials);
+          this.$store.dispatch("submitUser_Store", data);
 
-          const path = "/Profile/" + this.credentials.username;
+          const path = "/Profile/" + data.username;
           this.$router.push({
             path: path
           });
@@ -253,3 +257,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.invalid-credentials {
+  border: solid 1px red;
+}
+</style>
