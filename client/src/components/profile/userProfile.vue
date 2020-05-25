@@ -40,28 +40,55 @@
           <button type="button" class="btn btn-primary btn-profile-field">Create product</button>
         </router-link>
       </div>
+      <div class="product-content" style="width: 100%">
+        <h3>Products</h3>
+        <hr />
+        <div class="list-group">
+          <button
+            v-for="product in userProducts"
+            :key="product.id"
+            type="button"
+            class="list-group-item list-group-item-action list-group-item-light"
+          >
+            <span class="float-left">{{product.title}}</span>
+            <span
+              class="badge badge-primary badge-pill float-right"
+              style="margin-top: 4px"
+            >{{product.quantity}}</span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-
+import { getUserProducts } from "./server_comm/userController";
 export default {
+  data() {
+    return {
+      userProducts: []
+    };
+  },
+  computed: {
+    ...mapGetters(["userData"])
+  },
   created() {
     if (this.userData.username == "") {
       this.$router.push({
         path: "/"
       });
-    }
-  },
-  computed: {
-    ...mapGetters(["userData"])
+    } else this.getProducts();
   },
   methods: {
     imgURL(url) {
       if (url[0] == "/") return require("../../assets/images" + url);
       else return url;
+    },
+    async getProducts() {
+      const userProducts = await getUserProducts(this.userData.username);
+      this.userProducts = userProducts;
     }
   }
 };

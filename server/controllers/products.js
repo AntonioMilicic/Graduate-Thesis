@@ -9,4 +9,19 @@ function getProducts(req, res) {
     .catch((err) => res.jsend.error(err));
 }
 
-module.exports = { getProducts };
+function getAllUserProducts(req, res) {
+  const query = {
+    where: {
+      username: req.params.id,
+    },
+  };
+  models.Users.findOne({
+    query,
+    include: [{ model: models.Products, as: "products" }],
+  })
+    .then((userData) => userData.products)
+    .then((userProducts) => res.jsend.success(userProducts))
+    .catch((err) => res.jsend.error(err));
+}
+
+module.exports = { getProducts, getAllUserProducts };

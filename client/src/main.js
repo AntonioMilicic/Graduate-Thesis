@@ -12,8 +12,6 @@ import {
   faTimesCircle,
   faSignInAlt,
   faUserTie,
-  faFemale,
-  faMale,
   faIdCardAlt,
   faArchive,
   faHome,
@@ -25,6 +23,7 @@ import {
   faSearch,
   faAngleDoubleUp,
   faSignOutAlt,
+  faAddressCard,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -33,8 +32,6 @@ library.add(
   faTimesCircle,
   faSignInAlt,
   faUserTie,
-  faFemale,
-  faMale,
   faIdCardAlt,
   faArchive,
   faHome,
@@ -45,7 +42,8 @@ library.add(
   faList,
   faSearch,
   faAngleDoubleUp,
-  faSignOutAlt
+  faSignOutAlt,
+  faAddressCard
 );
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 

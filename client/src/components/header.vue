@@ -42,8 +42,7 @@
           >
             <a class="nav-link">
               Profile
-              <font-awesome-icon icon="male" />
-              <font-awesome-icon icon="female" />
+              <font-awesome-icon icon="address-card" />
             </a>
           </router-link>
           <li v-if="userName" class="nav-item" style="cursor: pointer;">

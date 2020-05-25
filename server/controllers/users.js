@@ -86,24 +86,9 @@ async function updateUser(req, res) {
   } else res.jsend.error(user);
 }
 
-function getAllUserData(req, res) {
-  const query = {
-    where: {
-      username: req.params.id,
-    },
-  };
-  models.Users.findOne({
-    query,
-    include: [{ model: models.Products, as: "products" }],
-  })
-    .then((userData) => res.jsend.success(userData))
-    .catch((err) => res.jsend.error(err));
-}
-
 module.exports = {
   getUser,
   userAuth,
   addUser,
   updateUser,
-  getAllUserData,
 };

@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { postSignIn } from "./server_communication/userController";
+import { postSignIn } from "./server_comm/userController";
 
 export default {
   data() {

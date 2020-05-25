@@ -165,7 +165,7 @@ import { mapGetters } from "vuex";
 import {
   postCredentials,
   postUpdateCredentials
-} from "./server_communication/userController";
+} from "./server_comm/userController";
 
 export default {
   data() {
@@ -190,6 +190,9 @@ export default {
       showCreate: false
     };
   },
+  computed: {
+    ...mapGetters({ exists: "userData" })
+  },
   created() {
     // Push to frontpage if user is not signed but he is on update profile page
     if (this.exists.username == "" && this.$route.path != "/CreateAccount") {
@@ -202,9 +205,6 @@ export default {
       this.showCreate = true;
     } else this.showCreate = false;
     this.credentials = { ...this.exists };
-  },
-  computed: {
-    ...mapGetters({ exists: "userData" })
   },
   methods: {
     async submitCredentials(command) {
