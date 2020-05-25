@@ -1,4 +1,4 @@
-const Users = require("../models/Users");
+const models = require("../models");
 
 // Get profile data
 function getUser(req, res) {
@@ -7,7 +7,7 @@ function getUser(req, res) {
       username: req.params.id,
     },
   };
-  Users.findOne(query)
+  models.Users.findOne(query)
     .then((user) => {
       if (user != null) {
         user.password = "";
@@ -26,7 +26,7 @@ function userAuth(req, res) {
     },
   };
   // If user is found, dont return password with packet
-  Users.findOne(query)
+  models.Users.findOne(query)
     .then((user) => {
       if (user != null) {
         user.password = "";
@@ -48,10 +48,10 @@ function addUser(req, res) {
   };
   const query = { ...req.body };
 
-  Users.findOne(queryCheck)
+  models.Users.findOne(queryCheck)
     .then((exists) => {
       if (exists == null) {
-        Users.create(query)
+        models.Users.create(query)
           .then(() => res.jsend.success("success"))
           .catch((err) => res.jsend.error(err));
       } else res.jsend.error(exists);
@@ -85,4 +85,25 @@ async function updateUser(req, res) {
     res.jsend.success(user);
   } else res.jsend.error(user);
 }
-module.exports = { getUser, userAuth, addUser, updateUser };
+
+function getAllUserData(req, res) {
+  const query = {
+    where: {
+      username: req.params.id,
+    },
+  };
+  models.Users.findOne({
+    query,
+    include: [{ model: models.Products, as: "products" }],
+  })
+    .then((userData) => res.jsend.success(userData))
+    .catch((err) => res.jsend.error(err));
+}
+
+module.exports = {
+  getUser,
+  userAuth,
+  addUser,
+  updateUser,
+  getAllUserData,
+};

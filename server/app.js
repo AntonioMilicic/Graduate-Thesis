@@ -4,15 +4,11 @@ const path = require("path");
 const jsend = require("jsend");
 const cors = require("cors");
 
-const api = require("./routes");
+const api = require("./controllers");
 
-// Database
-const db = require("./config/database");
-
-// TEST db
-db.authenticate()
-  .then(() => console.log("Database connected..."))
-  .catch((err) => console.log("Error" + err));
+// Import of DB and Controllers
+const db = require("./models");
+const controller = require("./controllers/index.js");
 
 const app = express();
 
