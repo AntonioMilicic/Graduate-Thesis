@@ -9,7 +9,7 @@
       style="text-align: center"
       v-if="badCredentials"
     >Seems like account with exact username or email already exists &#x1F615;</h5>
-    <form onsubmit="return false">
+    <form onsubmit="return false" id="form">
       <small class="form-text text-muted" style="margin: 0 0 10px 10px;">Mandatory fields</small>
       <div class="form-row">
         <div class="form-group col-md-6" v-if="showCreate">
@@ -145,14 +145,12 @@
             type="submit"
             style="margin-top: 32px; float: right"
             class="btn btn-primary"
-            @click="submitCredentials('create')"
           >Create account</button>
           <button
             v-if="!showCreate"
             type="submit"
             style="margin-top: 32px; float: right"
             class="btn btn-primary"
-            @click="submitCredentials('update')"
           >Update account</button>
         </div>
       </div>
@@ -206,28 +204,25 @@ export default {
     } else this.showCreate = false;
     this.credentials = { ...this.exists };
   },
+  mounted() {
+    const form = document.getElementById("form");
+    form.addEventListener("submit", this.submitCredentials);
+  },
   methods: {
-    async submitCredentials(command) {
+    async submitCredentials() {
       let serverResponse = "";
       const data = this.credentials;
+      const create = this.showCreate;
 
-      if (data.password != "" && data.password != data.passwordRe) {
+      if (data.password != data.passwordRe) {
         alert("Passwords must match!");
         data.password = "";
         data.passwordRe = "";
         this.badPassword = true;
-      } else if (
-        data.password != "" &&
-        data.passwordRe != "" &&
-        data.firstName != "" &&
-        data.lastName != "" &&
-        data.username != "" &&
-        data.email != "" &&
-        data.password == data.passwordRe
-      ) {
-        if (command == "create") {
+      } else {
+        if (create == true) {
           serverResponse = await postCredentials(data);
-        } else if (command == "update") {
+        } else if (create == false) {
           serverResponse = await postUpdateCredentials(data);
         }
         if (serverResponse == null) {

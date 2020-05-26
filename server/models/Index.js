@@ -20,10 +20,7 @@ const models = {
 };
 
 models.Users.hasMany(models.Products, { as: "products" });
-models.Products.belongsTo(models.Users, {
-  foreignKey: "userId",
-  as: "user",
-});
+models.Products.belongsTo(models.Users, { as: "user" });
 
 models.Sequelize = Sequelize;
 models.sequelize = sequelize;

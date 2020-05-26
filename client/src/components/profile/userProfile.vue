@@ -44,18 +44,20 @@
         <h3>Products</h3>
         <hr />
         <div class="list-group">
-          <button
-            v-for="product in userProducts"
-            :key="product.id"
-            type="button"
-            class="list-group-item list-group-item-action list-group-item-light"
-          >
-            <span class="float-left">{{product.title}}</span>
-            <span
-              class="badge badge-primary badge-pill float-right"
-              style="margin-top: 4px"
-            >{{product.quantity}}</span>
-          </button>
+          <router-link to="/Products">
+            <button
+              v-for="product in userProducts"
+              :key="product.id"
+              type="button"
+              class="list-group-item list-group-item-action list-group-item-light"
+            >
+              <span class="float-left">{{product.title}}</span>
+              <span
+                class="badge badge-primary badge-pill float-right"
+                style="margin-top: 4px"
+              >{{product.quantity}}</span>
+            </button>
+          </router-link>
         </div>
       </div>
     </div>
@@ -87,7 +89,8 @@ export default {
       else return url;
     },
     async getProducts() {
-      const userProducts = await getUserProducts(this.userData.username);
+      const userProducts = await getUserProducts(this.userData.id);
+      console.log(userProducts);
       this.userProducts = userProducts;
     }
   }

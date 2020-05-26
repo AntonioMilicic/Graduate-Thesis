@@ -4,6 +4,7 @@ import * as getters from "./getters";
 
 const state = {
   userData: {
+    id: "",
     firstName: "",
     lastName: "",
     username: "",

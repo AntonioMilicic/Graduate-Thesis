@@ -8,8 +8,9 @@ const user = require("./users");
 router.use(jsend.middleware);
 
 router.get("/products", product.getProducts);
-router.get("/products/user-products/:id", product.getAllUserProducts);
 router.get("/users/:id", user.getUser);
+router.get("/products/user-products/:id", product.getAllUserProducts);
+router.post("/products/user-product/create", product.createProduct);
 router.post("/login", user.userAuth);
 router.post("/createAccount", user.addUser);
 router.post("/updateAccount", user.updateUser);

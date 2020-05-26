@@ -69,7 +69,7 @@ async function updateUser(req, res) {
     },
   };
 
-  const user = await Users.findOne(queryCheck);
+  const user = await models.Users.findOne(queryCheck);
 
   if (user != null) {
     user.role = req.body.role;

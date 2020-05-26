@@ -109,7 +109,7 @@ export default {
 .category-content {
   margin-left: 10%;
 }
-@media only screen and (max-width: 770px) {
+@media only screen and (max-width: 768px) {
   .category-content {
     margin: auto;
     margin-bottom: 10px;
