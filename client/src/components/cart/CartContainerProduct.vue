@@ -2,8 +2,9 @@
   <div class="cart-product-wrapper card">
     <div class="row no-gutters">
       <div class="col-md-4 img-container">
-        <img :src="cartProduct.imgSrc" class="card-img" alt="cart-image" />
+        <img class="card-img" alt="cart-image" :src="cartProduct.imgSrc" />
       </div>
+
       <div class="col-md-8">
         <div class="card-body">
           <h6 class="card-title">{{ cartProduct.title }}</h6>
@@ -19,6 +20,7 @@
           <p class="text-muted">Total Price: {{ cartProduct.price * cartProduct.selectedQuantity }}</p>
         </div>
       </div>
+
       <font-awesome-icon class="remove-icon" icon="times-circle" @click="removeCartItem" />
     </div>
   </div>
@@ -46,14 +48,30 @@ export default {
 </script>
 
 <style scoped>
-.card-img {
+.card {
+  margin-bottom: 10px;
+  border: solid 0.5px darkgray;
+}
+.card:hover {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+.card .row .img-container {
+  height: 232px;
+}
+.card .row .img-container .card-img {
   width: 100%;
   height: 100%;
 }
-.img-container {
-  height: 232px;
+.card .row .card-body .quantity-control {
+  font-size: 32px;
+  padding: 10px;
+  margin-right: 20px;
 }
-.remove-icon {
+.card .row .card-body .quantity-control:hover {
+  cursor: pointer;
+}
+.card .row .remove-icon {
   position: absolute;
   top: -5px;
   right: -5px;
@@ -63,23 +81,7 @@ export default {
   border-radius: 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
-.quantity-control {
-  font-size: 32px;
-  padding: 10px;
-  margin-right: 20px;
-}
-.quantity-control:hover {
+.card .row .remove-icon:hover {
   cursor: pointer;
-}
-.remove-icon:hover {
-  cursor: pointer;
-}
-.card {
-  margin-bottom: 10px;
-  border: solid 0.5px darkgray;
-}
-.card:hover {
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 </style>
