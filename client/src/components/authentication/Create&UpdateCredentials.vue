@@ -274,7 +274,7 @@ export default {
   margin-bottom: 50px;
 }
 .form-row .form-group .submit-button {
-  margin-top: 32px;
   float: right;
+  margin-top: 32px;
 }
 </style>

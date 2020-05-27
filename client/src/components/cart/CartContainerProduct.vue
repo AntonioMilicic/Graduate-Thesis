@@ -64,9 +64,9 @@ export default {
   height: 100%;
 }
 .card .row .card-body .quantity-control {
-  font-size: 32px;
   padding: 10px;
   margin-right: 20px;
+  font-size: 32px;
 }
 .card .row .card-body .quantity-control:hover {
   cursor: pointer;
@@ -75,10 +75,10 @@ export default {
   position: absolute;
   top: -5px;
   right: -5px;
+  border-radius: 20px;
   font-size: 20px;
   color: red;
   background-color: white;
-  border-radius: 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 .card .row .remove-icon:hover {

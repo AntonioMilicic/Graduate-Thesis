@@ -1,33 +1,35 @@
 <template>
-  <div>
-    <div class="row" style="width: 100%">
+  <div class="product-container-wrapper">
+    <div class="row">
       <div class="category-content">
-        <label for="category" style="margin-right: 10px; font-size: 20px;">
+        <label class="category-label" for="category">
           <font-awesome-icon icon="list" />
         </label>
         <select
-          v-model="selectedCategory"
           id="category"
-          name="categorySelector"
           class="category-selection"
+          name="categorySelector"
+          v-model="selectedCategory"
           @change="filterCategoryProducts"
         >
           <option>All categories</option>
           <option v-for="category in categories" :key="category">{{category}}</option>
         </select>
       </div>
+
       <div class="input-field">
         <input
           class="input-search"
-          placeholder="search..."
           type="text"
+          placeholder="search..."
           v-model="searchValue"
           @keyup="searchFor"
         />
-        <font-awesome-icon v-model="searchValue" class="search-icon" icon="search" />
+        <font-awesome-icon class="search-icon" icon="search" />
       </div>
     </div>
     <hr />
+
     <div class="row row-cols-1 row-cols-lg-4 row-cols-md-2">
       <app-product v-for="product in filteredProducts" :key="product.id" :product="product" />
     </div>
@@ -50,7 +52,7 @@ export default {
     appProduct: Product
   },
   computed: {
-    ...mapGetters(["products", "categories"])
+    ...mapGetters(["categories", "products"])
   },
   created() {
     this.filteredProducts = this.products;
@@ -77,44 +79,49 @@ export default {
 </script>
 
 <style scoped>
-.category-selection {
-  background-color: rgb(243, 241, 241);
-  font-size: 18px;
+.row {
+  width: 100%;
+}
+.row .category-content {
+  margin-left: 10%;
+}
+.row .category-content .category-label {
+  margin-right: 10px;
+  font-size: 20px;
+}
+.row .category-content .category-selection {
   width: 215px;
+  font-size: 18px;
+  background-color: rgb(243, 241, 241);
   outline: none;
 }
-.input-field {
+.row .input-field {
   margin-left: auto;
   margin-right: 10%;
-  background-color: rgb(243, 241, 241);
   border-radius: 20px;
-}
-.input-field .input-search {
   background-color: rgb(243, 241, 241);
-  color: rgba(32, 32, 32, 0.568);
-  outline: none;
+}
+.row .input-field .input-search {
+  width: 200px;
+  height: 37.7px;
   margin-left: 10px;
   font-size: 18px;
-  height: 37.7px;
-  width: 200px;
+  color: rgba(32, 32, 32, 0.568);
+  background-color: rgb(243, 241, 241);
+  outline: none;
   border: none;
 }
-.input-field .search-icon {
+.row .input-field .search-icon {
   margin: 6px 10px 0 5px;
   font-size: 20px;
 }
-.search-icon:hover {
-  cursor: pointer;
-}
-.category-content {
-  margin-left: 10%;
-}
+
 @media only screen and (max-width: 768px) {
-  .category-content {
+  .row .category-content {
     margin: auto;
     margin-bottom: 10px;
   }
-  .input-field {
+  .row .input-field {
     display: flex;
     margin-right: auto;
     margin-bottom: 20px;

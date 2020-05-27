@@ -49,7 +49,7 @@ export default {
 }
 .row .btn-container .btn-checkout {
   padding: 10px;
-  border-radius: 10px;
   margin-right: 10px;
+  border-radius: 10px;
 }
 </style>
