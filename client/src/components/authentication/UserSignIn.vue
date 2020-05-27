@@ -1,5 +1,5 @@
 <template>
-  <div class="outer-wrapper">
+  <div class="signIn-wrapper">
     <h4>
       Please sign in
       <font-awesome-icon icon="lock" />

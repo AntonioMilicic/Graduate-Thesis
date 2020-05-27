@@ -93,7 +93,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { postUserProduct } from "./server_comm/userController";
+import { postUserProduct } from "../server_comm/userController";
 export default {
   data() {
     return {

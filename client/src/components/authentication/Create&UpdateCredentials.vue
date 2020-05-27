@@ -1,5 +1,5 @@
 <template>
-  <div class="outer-wrapper">
+  <div class="createupdate-account-wrapper">
     <h4>
       Please enter your credentials
       <font-awesome-icon icon="user-shield" />
@@ -192,9 +192,6 @@ export default {
       showCreate: false
     };
   },
-  computed: {
-    ...mapGetters({ user: "userData" })
-  },
   created() {
     // Push to frontpage if user is not signed but he is on update profile page(replace with router guard?)
     if (this.user.username === "" && this.$route.path !== "/CreateAccount") {
@@ -212,6 +209,9 @@ export default {
     // Event listener for form submittion
     const form = document.getElementById("form");
     form.addEventListener("submit", this.submitCredentials);
+  },
+  computed: {
+    ...mapGetters({ user: "userData" })
   },
   methods: {
     showPassword() {

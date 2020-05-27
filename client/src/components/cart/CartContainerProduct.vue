@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="cart-product-wrapper card">
     <div class="row no-gutters">
       <div class="col-md-4 img-container">
         <img :src="cartProduct.imgSrc" class="card-img" alt="cart-image" />
@@ -9,31 +9,17 @@
           <h6 class="card-title">{{ cartProduct.title }}</h6>
           <p class="card-text">{{ cartProduct.description }}</p>
           <p class="card-text">
-            <small class="text-muted"
-              >Quantity: {{ cartProduct.selectedQuantity }}</small
-            >
+            <small class="text-muted">Quantity: {{ cartProduct.selectedQuantity }}</small>
             <br />
-            <small class="text-muted"
-              >Item Price: {{ cartProduct.price | currency }}</small
-            >
+            <small class="text-muted">Item Price: {{ cartProduct.price | currency }}</small>
           </p>
-          <span class="quantity-control float-right" @click="quantityAlt('-')"
-            >-</span
-          >
-          <span class="quantity-control float-right" @click="quantityAlt('+')"
-            >+</span
-          >
+          <span class="quantity-control float-right" @click="quantityAlt('-')">-</span>
+          <span class="quantity-control float-right" @click="quantityAlt('+')">+</span>
           <hr />
-          <p class="text-muted">
-            Total Price: {{ cartProduct.price * cartProduct.selectedQuantity }}
-          </p>
+          <p class="text-muted">Total Price: {{ cartProduct.price * cartProduct.selectedQuantity }}</p>
         </div>
       </div>
-      <font-awesome-icon
-        class="remove-icon"
-        icon="times-circle"
-        @click="removeCartItem"
-      />
+      <font-awesome-icon class="remove-icon" icon="times-circle" @click="removeCartItem" />
     </div>
   </div>
 </template>
@@ -46,7 +32,7 @@ export default {
   methods: {
     ...mapActions({
       removeItem: "removeFromCart_Store",
-      quantityAlter: "quantityAlter_Store",
+      quantityAlter: "quantityAlter_Store"
     }),
     removeCartItem() {
       this.removeItem(this.cartProduct.id);
@@ -54,8 +40,8 @@ export default {
     quantityAlt(value) {
       const order = { operation: value, id: this.cartProduct.id };
       this.quantityAlter(order);
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import Product from "./product.vue";
+import Product from "./ProductContainerProduct.vue";
 import { mapGetters } from "vuex";
 
 export default {
