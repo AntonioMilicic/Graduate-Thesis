@@ -1,14 +1,25 @@
 <template>
-  <div class="createupdate-account-wrapper">
-    <h4>
-      Please enter your credentials
-      <font-awesome-icon icon="user-shield" />
-    </h4>
-    <hr />
-    <h5
-      class="warning-title"
-      v-if="badCredentials"
-    >Seems like account with exact username or email already exists &#x1F605;</h5>
+  <div class="create-update-account-wrapper">
+    <div class="title-area">
+      <font-awesome-icon
+        class="float-left icon-back"
+        icon="arrow-left"
+        title="Back to Profile"
+        data-toggle="tooltip"
+        data-placement="top"
+        v-if="!showCreate"
+        @click="backToProfile"
+      />
+      <h4 class="title">
+        Please enter your credentials
+        <font-awesome-icon icon="user-shield" />
+      </h4>
+      <hr />
+      <h5
+        class="warning-title"
+        v-if="badCredentials"
+      >Seems like account with exact username or email already exists &#x1F605;</h5>
+    </div>
 
     <form id="form" onsubmit="return false">
       <small class="form-text text-muted small-text-style">Mandatory fields</small>
@@ -214,6 +225,9 @@ export default {
     ...mapGetters({ user: "userData" })
   },
   methods: {
+    backToProfile() {
+      this.$router.go(-1);
+    },
     showPassword() {
       const checkbox = document.getElementById("checkbox");
       const passwordField = document.getElementsByClassName("inputPassword");
@@ -261,7 +275,16 @@ export default {
 </script>
 
 <style scoped>
-.warning-title {
+.title-area .icon-back {
+  font-size: 32px;
+}
+.title-area .icon-back:hover {
+  cursor: pointer;
+}
+.title-area .title {
+  text-align: center;
+}
+.title-area .warning-title {
   text-align: center;
 }
 .form-row .form-group .invalid-credentials {

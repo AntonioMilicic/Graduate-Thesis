@@ -1,10 +1,20 @@
 <template>
   <div class="create-product-wrapper">
-    <h4>
-      Enlist your own product
-      <font-awesome-icon icon="plus-circle" />
-    </h4>
-    <hr />
+    <div class="title-area">
+      <font-awesome-icon
+        class="float-left icon-back"
+        icon="arrow-left"
+        title="Back to Profile"
+        data-toggle="tooltip"
+        data-placement="top"
+        @click="backToProfile"
+      />
+      <h4 class="title">
+        Enlist your own product
+        <font-awesome-icon icon="plus-circle" />
+      </h4>
+      <hr />
+    </div>
 
     <form onsubmit="return false" id="form">
       <small class="form-text text-muted">Mandatory fields</small>
@@ -122,6 +132,9 @@ export default {
     form.addEventListener("submit", this.submitProductData);
   },
   methods: {
+    backToProfile() {
+      this.$router.go(-1);
+    },
     imageInputField(value) {
       if (value === "+") this.product.imageSources.push({ value: "" });
       else if (value === "-") this.product.imageSources.pop();
@@ -151,6 +164,15 @@ export default {
 </script>
 
 <style scoped>
+.title-area .icon-back {
+  font-size: 32px;
+}
+.title-area .icon-back:hover {
+  cursor: pointer;
+}
+.title-area .title {
+  text-align: center;
+}
 .form-text {
   margin: 0 0 10px 10px;
 }

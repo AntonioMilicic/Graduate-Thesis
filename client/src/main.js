@@ -27,6 +27,7 @@ import {
   faPlus,
   faPlusCircle,
   faMinus,
+  faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -49,7 +50,8 @@ library.add(
   faAddressCard,
   faPlus,
   faPlusCircle,
-  faMinus
+  faMinus,
+  faArrowLeft
 );
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 

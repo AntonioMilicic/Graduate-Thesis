@@ -1,14 +1,16 @@
 <template>
   <div class="signIn-wrapper">
-    <h4>
-      Please sign in
-      <font-awesome-icon icon="lock" />
-    </h4>
-    <hr />
-    <h5
-      class="warning-title"
-      v-if="badCredentials"
-    >Please make sure your username and password match &#x1F605;</h5>
+    <div class="title-area">
+      <h4 class="title">
+        Please sign in
+        <font-awesome-icon icon="lock" />
+      </h4>
+      <hr />
+      <h5
+        class="warning-title"
+        v-if="badCredentials"
+      >Please make sure your username and password match &#x1F605;</h5>
+    </div>
 
     <form>
       <div class="form-row">
@@ -74,7 +76,10 @@ export default {
 </script>
 
 <style scoped>
-.warning-title {
+.title-area .title {
+  text-align: center;
+}
+.title-area .warning-title {
   text-align: center;
 }
 .form-row .form-group .invalid-password {
