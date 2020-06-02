@@ -76,9 +76,6 @@ export default {
 </script>
 
 <style scoped>
-.title-area .title {
-  text-align: center;
-}
 .title-area .warning-title {
   text-align: center;
 }
