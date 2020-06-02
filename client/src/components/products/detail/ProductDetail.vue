@@ -129,8 +129,9 @@ export default {
 .container-center .user-data .btn-back {
   width: 200px;
   height: 50px;
-  padding: 10px;
   margin: 16px 10px;
+  outline: none;
+  border: none;
   border-radius: 20px;
   font-size: 18px;
   color: white;
