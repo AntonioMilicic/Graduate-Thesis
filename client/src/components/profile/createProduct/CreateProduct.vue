@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="create-product-wrapper">
     <h4>
       Enlist your own product
       <font-awesome-icon icon="plus-circle" />
@@ -7,41 +7,41 @@
     <hr />
 
     <form onsubmit="return false" id="form">
-      <small class="form-text text-muted" style="margin: 0 0 10px 10px;">Mandatory fields</small>
+      <small class="form-text text-muted">Mandatory fields</small>
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputTitle">Title</label>
-          <input v-model="product.title" type="text" class="form-control" id="inputTitle" required />
+          <input id="inputTitle" class="form-control" type="text" v-model="product.title" required />
         </div>
         <div class="form-group col-md-2">
           <label for="inputCategory">Category</label>
           <input
-            v-model="product.category"
-            type="text"
-            class="form-control"
             id="inputCategory"
+            class="form-control"
+            type="text"
+            v-model="product.category"
             required
           />
         </div>
         <div class="form-group col-md-2">
           <label for="inputPrice">Price $</label>
           <input
-            v-model="product.price"
+            id="inputPrice"
+            class="form-control"
             type="number"
             min="1"
-            class="form-control"
-            id="inputPrice"
+            v-model="product.price"
             required
           />
         </div>
         <div class="form-group col-md-2">
           <label for="inputQuantity">Quantity</label>
           <input
-            v-model="product.quantity"
+            id="inputQuantity"
+            class="form-control"
             type="number"
             min="1"
-            class="form-control"
-            id="inputQuantity"
+            v-model="product.quantity"
             required
           />
         </div>
@@ -50,12 +50,12 @@
         <div class="form-group col-md-12">
           <label for="inputDescription">Description</label>
           <textarea
-            v-model="product.description"
+            id="inputDescription"
+            class="form-control"
             type="text"
             rows="4"
             cols="50"
-            class="form-control"
-            id="inputDescription"
+            v-model="product.description"
             required
           />
         </div>
@@ -64,28 +64,27 @@
         <div class="form-group col-md-11">
           <label for="inputImages">Image Sources</label>
           <input
+            id="inputImages"
+            class="form-control"
+            type="text"
             v-for="(source, index) in product.imageSources"
             :key="index"
             v-model="source.value"
-            type="text"
-            class="form-control"
-            id="inputImages"
-            style="margin-bottom: 10px"
             required
           />
         </div>
         <div class="form-group col-md-1 field-control">
-          <font-awesome-icon @click="imageInputField('+')" icon="plus" class="add-field-icon" />
+          <font-awesome-icon class="add-field-icon" icon="plus" @click="imageInputField('+')" />
           <font-awesome-icon
-            @click="imageInputField('-')"
-            icon="minus"
             class="remove-field-icon"
+            icon="minus"
             v-if="product.imageSources.length-1"
+            @click="imageInputField('-')"
           />
         </div>
       </div>
       <div class="form-group col-md-3 float-right create-product-btn">
-        <button type="submit" class="btn btn-primary">Enlist product</button>
+        <button class="btn btn-primary" type="submit">Enlist product</button>
       </div>
     </form>
   </div>
@@ -152,29 +151,35 @@ export default {
 </script>
 
 <style scoped>
-.field-control {
-  font-size: 32px;
-  margin-top: 32px;
+.form-text {
+  margin: 0 0 10px 10px;
+}
+.form-row .field-control {
   display: flex;
   flex-direction: column;
+  margin-top: 32px;
+  font-size: 32px;
 }
-.field-control .add-field-icon {
+.form-row .field-control .add-field-icon {
   margin-bottom: 20px;
 }
-.field-control .add-field-icon:hover {
+.form-row .field-control .add-field-icon:hover {
   cursor: pointer;
 }
-.field-control .remove-field-icon:hover {
+.form-row .field-control .remove-field-icon:hover {
   cursor: pointer;
+}
+.form-row:last-child {
+  margin-bottom: 10px;
 }
 
 @media only screen and (max-width: 768px) {
-  .field-control {
+  .form-row .field-control {
     display: inherit;
     flex-direction: unset;
     margin-top: 0;
   }
-  .add-field-icon {
+  .form-row .field-control .add-field-icon {
     margin: auto;
     margin-right: 30px;
   }

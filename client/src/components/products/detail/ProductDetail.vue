@@ -1,7 +1,7 @@
 <template>
-  <div class="product-detail-wrapper">
-    <div class="product-detail-center">
-      <div class="product-detail-user">
+  <div class="product-detail-wrapper outer-container">
+    <div class="container-center">
+      <div class="user-data">
         <img class="user-image" alt="user-img" :src="getProductDetail.imgSrc" />
         <ul class="user-detail">
           <li>
@@ -95,38 +95,38 @@ export default {
 </script>
 
 <style>
-.product-detail-wrapper {
+.outer-container {
   width: 100%;
   min-height: 100%;
   margin: 50px 0;
 }
-.product-detail-center {
+.container-center {
   display: flex;
   max-width: 80%;
   margin-left: 10%;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-.product-detail-center:hover {
+.container-center:hover {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
-.product-detail-center .product-detail-user {
+.container-center .user-data {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
 }
-.product-detail-center .product-detail-user .user-image {
+.container-center .user-data .user-image {
   width: 200px;
   height: 200px;
   margin-bottom: 25px;
   border-radius: 100px;
 }
-.product-detail-center .product-detail-user .user-detail {
+.container-center .user-data .user-detail {
   list-style-type: none;
   padding: 0;
 }
-.product-detail-center .product-detail-user .btn-back {
+.container-center .user-data .btn-back {
   width: 200px;
   height: 50px;
   padding: 10px;
@@ -138,7 +138,7 @@ export default {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-.product-detail-center .product-detail-user .btn-back :hover {
+.container-center .user-data .btn-back:hover {
   box-shadow: none;
   cursor: pointer;
 }
@@ -148,37 +148,30 @@ export default {
   margin-bottom: 10px;
   background-color: rgb(243, 241, 241);
 }
-.product-detail-center .product-content {
+.container-center .product-content {
+  width: 100%;
   padding: 30px;
 }
-.product-detail-center .product-content .img-center {
+.container-center .product-content .img-center {
   width: 100%;
 }
-.product-detail-center .product-content .product-img {
-  max-width: 100%;
+.container-center .product-content .product-img {
+  width: 100%;
   height: 424px;
   margin: 10px 0;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 @media screen and (max-width: 991px) {
-  .product-detail-center {
+  .container-center {
     display: flex;
     flex-direction: column;
     max-width: 100%;
     margin-left: 0;
     box-shadow: none;
   }
-  .product-detail-center :hover {
+  .container-center:hover {
     box-shadow: none;
-  }
-  .product-detail-center .product-content .product-img {
-    margin-left: 5%;
-  }
-}
-@media screen and (max-width: 767px) {
-  .product-detail-center .product-content .product-img {
-    margin-left: 0;
   }
 }
 </style>

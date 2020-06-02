@@ -1,8 +1,8 @@
 <template>
-  <div class="product-detail-container">
-    <div class="product-detail-center">
-      <div class="product-detail-user" v-show="userData.email">
-        <img v-if="userData.image" :src="imgURL(userData.image)" alt="user-img" class="user-image" />
+  <div class="user-profile-wrapper outer-container">
+    <div class="container-center">
+      <div class="user-data" v-show="userData.email">
+        <img class="user-image" alt="user-img" :src="imgURL(userData.image)" v-if="userData.image" />
         <ul class="user-detail">
           <li>
             <b>Name:</b>
@@ -34,28 +34,26 @@
           </li>
         </ul>
         <router-link :to="userData.username+'/Update-Profile'">
-          <button type="button" class="btn btn-primary btn-profile-field">Update profile</button>
+          <button class="btn btn-primary btn-profile-field" type="button">Update profile</button>
         </router-link>
         <router-link :to="userData.username+'/Create-Product'">
-          <button type="button" class="btn btn-primary btn-profile-field">Create product</button>
+          <button class="btn btn-primary btn-profile-field" type="button">Create product</button>
         </router-link>
       </div>
-      <div class="product-content" style="width: 100%">
+
+      <div class="product-content">
         <h3>Products</h3>
         <hr />
         <div class="list-group">
           <router-link to="/Products">
             <button
+              class="list-group-item list-group-item-action list-group-item-light"
+              type="button"
               v-for="product in userProducts"
               :key="product.id"
-              type="button"
-              class="list-group-item list-group-item-action list-group-item-light"
             >
               <span class="float-left">{{product.title}}</span>
-              <span
-                class="badge badge-primary badge-pill float-right"
-                style="margin-top: 4px"
-              >{{product.quantity}}</span>
+              <span class="badge badge-primary badge-pill float-right">{{product.quantity}}</span>
             </button>
           </router-link>
         </div>
@@ -84,6 +82,7 @@ export default {
     } else this.getProducts();
   },
   methods: {
+    // returns URL for image, deppending if its outer source or local image
     imgURL(url) {
       if (url[0] == "/") return require("../../assets/images" + url);
       else return url;
@@ -98,8 +97,15 @@ export default {
 </script>
 
 <style scoped>
-.btn-profile-field {
-  margin: 10px 0 10px 0;
+/* Class styles are inhereted from products/detail/ProductDetail */
+.container-center .user-data .btn-profile-field {
   width: 132px;
+  margin: 10px 0 10px 0;
+}
+.container-center .product-content {
+  width: 100%;
+}
+.container-center .product-content .badge {
+  margin-top: 4px;
 }
 </style>
