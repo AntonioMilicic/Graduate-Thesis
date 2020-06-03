@@ -6,7 +6,7 @@ export const products = (state) => {
 };
 
 export const productDetail = (state) => (id) => {
-  return state.products.find((element) => element.id === id);
+  return state.products.find(element => element.id == id);
 };
 
 export const selectedProducts = (state) => {

@@ -1,6 +1,7 @@
-import products from "../../../data/productData";
-
-export const initProducts = ({ commit }) => {
+import { getProducts } from "./server_comm/serverController";
+// uzrokuje problem?
+export const initProducts = async ({ commit }) => {
+  const products = await getProducts();
   commit("SET_PRODUCTS", products);
 };
 

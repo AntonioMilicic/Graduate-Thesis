@@ -8,6 +8,16 @@ export async function getUserProducts(username) {
 
 export async function postUserProduct(order) {
   const response = await axios.post("products/user-product/create", order);
-  console.log(response.data.status);
   return response.data.status;
+}
+
+export async function updateUserProduct(order) {
+  const response = await axios.post("products/user-product/update/" + order.id, order);
+  console.log(response);
+  return response.data.status;
+}
+
+export async function postDeleteProduct(id) {
+  const response = await axios.delete("products/user-product/delete/" + id);
+  return response.data.data;
 }

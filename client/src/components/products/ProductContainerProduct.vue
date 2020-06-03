@@ -3,7 +3,7 @@
     <div class="card card-design">
       <router-link :to="path">
         <div class="card-img-container">
-          <img class="card-img" alt="card-img" :src="product.imgSrc" />
+          <img class="card-img" alt="card-img" :src="imgURL(product.imageSources[0])" />
         </div>
       </router-link>
 
@@ -57,6 +57,10 @@ export default {
   },
   props: ["product"],
   methods: {
+    imgURL(url) {
+      if (url[0] == "/") return require("../../assets/images" + url);
+      else return url;
+    },
     addToCart() {
       const orderInfo = {
         productId: this.product.id,

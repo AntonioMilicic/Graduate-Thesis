@@ -94,7 +94,8 @@
         </div>
       </div>
       <div class="form-group col-md-3 float-right create-product-btn">
-        <button class="btn btn-primary" type="submit">Enlist product</button>
+        <button class="btn btn-primary" type="submit" v-if="!showCreate">Update product</button>
+        <button class="btn btn-primary" type="submit" v-if="showCreate">Create product</button>
       </div>
     </form>
   </div>
@@ -102,7 +103,10 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { postUserProduct } from "../server_comm/userController";
+import {
+  postUserProduct,
+  updateUserProduct
+} from "../server_comm/userController";
 export default {
   data() {
     return {
@@ -113,11 +117,12 @@ export default {
         quantity: 1,
         description: "",
         imageSources: [{ value: "" }]
-      }
+      },
+      showCreate: true
     };
   },
   computed: {
-    ...mapGetters({ user: "userData" })
+    ...mapGetters({ user: "userData", storeProduct: "productDetail" })
   },
   created() {
     // Push to frontpage if user is not signed but he is on create product page
@@ -125,6 +130,19 @@ export default {
       this.$router.push({
         path: "/"
       });
+    }
+    if (this.$router.currentRoute.params.id != null) {
+      const product = {
+        ...this.storeProduct(this.$router.currentRoute.params.id)
+      };
+      // To set shape of value: img, so that add and remove field work
+      let images = [];
+      product.imageSources.forEach(img => {
+        images.push({ value: img });
+      });
+      product.imageSources = [...images];
+      this.product = product;
+      this.showCreate = false;
     }
   },
   mounted() {
@@ -141,6 +159,9 @@ export default {
     },
     async submitProductData() {
       const imageArray = [];
+      const createProduct = this.showCreate;
+      let response = "";
+
       this.product.imageSources.forEach(element => {
         imageArray.push(element.value);
       });
@@ -151,11 +172,17 @@ export default {
         quantity: this.product.quantity,
         description: this.product.description,
         imageSources: imageArray,
-        username: this.$router.currentRoute.params.id
+        username: this.$router.currentRoute.params.username
       };
 
-      const response = await postUserProduct(order);
+      if (createProduct === true) {
+        response = await postUserProduct(order);
+      } else if (createProduct === false) {
+        order.id = this.product.id;
+        response = await updateUserProduct(order);
+      }
       if (response == "success") {
+        this.$store.dispatch("initProducts");
         this.$router.go(-1);
       }
     }
@@ -184,9 +211,13 @@ export default {
 }
 .form-row .field-control .add-field-icon {
   margin-bottom: 20px;
+  margin-left: auto;
 }
 .form-row .field-control .add-field-icon:hover {
   cursor: pointer;
+}
+.form-row .field-control .remove-field-icon {
+  margin-left: auto;
 }
 .form-row .field-control .remove-field-icon:hover {
   cursor: pointer;
@@ -202,8 +233,10 @@ export default {
     margin-top: 0;
   }
   .form-row .field-control .add-field-icon {
-    margin: auto;
-    margin-right: 30px;
+    margin-left: 33%;
+  }
+  .form-row .field-control .remove-field-icon {
+    margin-right: 33%;
   }
   .create-product-btn {
     display: flex;

@@ -57,6 +57,9 @@ export default {
   created() {
     this.filteredProducts = this.products;
   },
+  updated() {
+    this.filteredProducts = this.products;
+  },
   methods: {
     filterCategoryProducts() {
       if (this.selectedCategory === "All categories") {
@@ -79,9 +82,6 @@ export default {
 </script>
 
 <style scoped>
-.row {
-  width: 100%;
-}
 .row .category-content {
   margin-left: 10%;
 }

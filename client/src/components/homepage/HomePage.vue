@@ -7,21 +7,33 @@
     </ol>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img class="d-block carousel-img" :src="products[1].imgSrc" alt="First slide" />
+        <img
+          class="d-block carousel-img"
+          src="../../assets/images/carousel-image-1.jpg"
+          alt="First slide"
+        />
         <div class="carousel-caption d-none d-md-block">
           <h5>...</h5>
           <p>...</p>
         </div>
       </div>
       <div class="carousel-item">
-        <img class="d-block carousel-img" :src="products[2].imgSrc" alt="Second slide" />
+        <img
+          class="d-block carousel-img"
+          src="../../assets/images/carousel-image-1.jpg"
+          alt="Second slide"
+        />
         <div class="carousel-caption d-none d-md-block">
           <h5>...</h5>
           <p>...</p>
         </div>
       </div>
       <div class="carousel-item">
-        <img class="d-block carousel-img" :src="products[3].imgSrc" alt="Third slide" />
+        <img
+          class="d-block carousel-img"
+          src="../../assets/images/carousel-image-1.jpg"
+          alt="Third slide"
+        />
         <div class="carousel-caption d-none d-md-block">
           <h5>...</h5>
           <p>...</p>
@@ -50,13 +62,7 @@
 </template>
 
 <script>
-export default {
-  computed: {
-    products() {
-      return this.$store.getters.products;
-    }
-  }
-};
+export default {};
 </script>
 
 <style scoped>

@@ -2,7 +2,7 @@
   <div class="product-detail-wrapper outer-container">
     <div class="container-center">
       <div class="user-data">
-        <img class="user-image" alt="user-img" :src="getProductDetail.imgSrc" />
+        <img class="user-image" alt="user-img" :src="imgURL(getProductDetail.imageSources[0])" />
         <ul class="user-detail">
           <li>
             <b>Name:</b> Test Ime
@@ -61,7 +61,11 @@
         </div>
 
         <div class="img-center">
-          <img class="product-img" alt="product-img" :src="getProductDetail.imgSrc" />
+          <img
+            class="product-img"
+            alt="product-img"
+            :src="imgURL(getProductDetail.imageSources[0])"
+          />
         </div>
       </div>
     </div>
@@ -81,6 +85,10 @@ export default {
     }
   },
   methods: {
+    imgURL(url) {
+      if (url[0] == "/") return require("../../../assets/images" + url);
+      else return url;
+    },
     addToCart() {
       const orderInfo = {
         productId: this.getProductDetail.id,

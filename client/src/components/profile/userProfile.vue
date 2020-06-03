@@ -45,17 +45,24 @@
         <h3>Products</h3>
         <hr />
         <div class="list-group">
-          <router-link to="/Products">
-            <button
-              class="list-group-item list-group-item-action list-group-item-light"
-              type="button"
-              v-for="product in userProducts"
-              :key="product.id"
-            >
-              <span class="float-left">{{product.title}}</span>
+          <div
+            class="list-group-item list-group-item-action list-group-item-light"
+            v-for="product in userProducts"
+            :key="product.id"
+          >
+            <router-link
+              :to="userData.username+'/Update-Product-'+product.id"
+              class="product-title float-left"
+            >{{product.title}}</router-link>
+            <div class="product-control">
+              <font-awesome-icon
+                class="remove-icon float-right"
+                icon="times-circle"
+                @click="deleteProduct(product.id)"
+              />
               <span class="badge badge-primary badge-pill float-right">{{product.quantity}}</span>
-            </button>
-          </router-link>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -64,7 +71,11 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { getUserProducts } from "./server_comm/userController";
+import {
+  getUserProducts,
+  postDeleteProduct
+} from "./server_comm/userController";
+
 export default {
   data() {
     return {
@@ -82,15 +93,21 @@ export default {
     } else this.getProducts();
   },
   methods: {
-    // returns URL for image, deppending if its outer source or local image
+    // returns URL for image, deppending if its outer source or local image, set this to work for global fetch
     imgURL(url) {
       if (url[0] == "/") return require("../../assets/images" + url);
       else return url;
     },
     async getProducts() {
       const userProducts = await getUserProducts(this.userData.id);
-      console.log(userProducts);
       this.userProducts = userProducts;
+    },
+    async deleteProduct(id) {
+      const response = await postDeleteProduct(id);
+      if (response === "deleted") {
+        this.getProducts();
+        this.$store.dispatch("initProducts");
+      }
     }
   }
 };
@@ -105,7 +122,23 @@ export default {
 .container-center .product-content {
   width: 100%;
 }
-.container-center .product-content .badge {
+.container-center .product-content .product-control {
+  height: 24px;
   margin-top: 4px;
+}
+.product-content .product-title {
+  text-decoration: none;
+  color: black;
+}
+.product-content .product-title:hover {
+  color: gray;
+}
+.product-content .product-control .remove-icon {
+  margin-left: 14px;
+  font-size: 20px;
+  color: rgb(230, 30, 30);
+}
+.product-content .product-control .remove-icon:hover {
+  cursor: pointer;
 }
 </style>

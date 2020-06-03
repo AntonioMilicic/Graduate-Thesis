@@ -31,9 +31,35 @@ async function createProduct(req, res) {
 
     const payload = { ...data };
     models.Products.create(payload)
-      .then((data) => res.jsend.success("success"))
+      .then(() => res.jsend.success("success"))
       .catch((err) => res.jsend.error(err));
   }
 }
 
-module.exports = { getProducts, getAllUserProducts, createProduct };
+async function updateProduct(req, res) {
+  const id = req.params.id;
+  const payload = req.body;
+  const product = await models.Products.findByPk(id);
+  if (product != null) {
+    product.title = payload.title;
+    product.price = payload.price;
+    product.quantity = payload.quantity;
+    product.description = payload.description;
+    product.category = payload.category;
+    product.imageSources = payload.imageSources;
+
+    product.save();
+    res.jsend.success("updated");
+  } else res.jsend.error(product);
+
+}
+
+function deleteProduct(req, res) {
+  const id = req.params.id;
+  models.Products.findByPk(id)
+    .then(data => { data.destroy() })
+    .then(() => res.jsend.success("deleted"))
+    .catch((err) => res.jsend.error(err));
+}
+
+module.exports = { getProducts, getAllUserProducts, createProduct, updateProduct, deleteProduct };
