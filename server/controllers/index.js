@@ -8,11 +8,12 @@ const user = require("./users");
 router.use(jsend.middleware);
 
 router.get("/products", product.getProducts);
-router.get("/users/:id", user.getUser);
 router.get("/products/user-products/:id", product.getAllUserProducts);
 router.post("/products/user-product/create", product.createProduct);
 router.post("/products/user-product/update/:id", product.updateProduct);
 router.delete("/products/user-product/delete/:id", product.deleteProduct);
+router.get("/users/user-by-product-Id/:id", user.getUserByProductId);
+router.get("/users/:id", user.getUser);
 router.post("/login", user.userAuth);
 router.post("/createAccount", user.addUser);
 router.post("/updateAccount", user.updateUser);

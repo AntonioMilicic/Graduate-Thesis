@@ -12,6 +12,7 @@
           v-model="selectedCategory"
           @change="filterCategoryProducts"
         >
+          <option>Select category</option>
           <option>All categories</option>
           <option v-for="category in categories" :key="category">{{category}}</option>
         </select>
@@ -44,7 +45,7 @@ export default {
   data() {
     return {
       filteredProducts: [],
-      selectedCategory: "All categories",
+      selectedCategory: "Select category",
       searchValue: ""
     };
   },
@@ -54,10 +55,7 @@ export default {
   computed: {
     ...mapGetters(["categories", "products"])
   },
-  created() {
-    this.filteredProducts = this.products;
-  },
-  updated() {
+  async created() {
     this.filteredProducts = this.products;
   },
   methods: {

@@ -2,22 +2,34 @@
   <div class="product-detail-wrapper outer-container">
     <div class="container-center">
       <div class="user-data">
-        <img class="user-image" alt="user-img" :src="imgURL(getProductDetail.imageSources[0])" />
+        <img class="user-image" alt="user-img" :src="imgURL(owner.image)" v-if="owner.image" />
+        <h6>Owner Data</h6>
         <ul class="user-detail">
           <li>
-            <b>Name:</b> Test Ime
+            <b>Owner:</b>
+            {{owner.username}}
           </li>
           <li>
-            <b>Email:</b> test@mail.com
+            <b>Email:</b>
+            {{owner.email}}
           </li>
           <li>
-            <b>Posts:</b> 104
+            <b>Country:</b>
+            {{owner.country}}
+          </li>
+          <li>
+            <b>City:</b>
+            {{owner.city}}
+          </li>
+          <li>
+            <b>ZIP:</b>
+            {{owner.zipCode}}
           </li>
         </ul>
         <button class="btn-back" type="button" @click="() => $router.go(-1)">Back</button>
       </div>
 
-      <div class="product-content">
+      <div class="product-content" v-if="getProductDetail">
         <h2>{{ getProductDetail.title }}</h2>
         <hr />
 
@@ -73,15 +85,20 @@
 </template>
 
 <script>
+import { getOwnerData } from "./server_comm/productController";
 export default {
   data() {
     return {
-      quantity: 0
+      quantity: 0,
+      owner: {}
     };
+  },
+  async created() {
+    this.owner = await { ...getOwnerData(this.$route.params.id) };
   },
   computed: {
     getProductDetail() {
-      return this.$store.getters.productDetail(parseInt(this.$route.params.id));
+      return this.$store.getters.productDetail(this.$route.params.id);
     }
   },
   methods: {

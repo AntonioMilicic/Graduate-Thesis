@@ -21,5 +21,3 @@ export const routes = [
   { path: "/SignIn", component: SignIn },
   { path: "/CreateAccount", component: CreateAndUpdateAccount },
 ];
-
-//:to="userData.username+'/Update-Product-'+product.name"

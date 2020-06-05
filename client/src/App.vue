@@ -26,8 +26,8 @@ export default {
   components: {
     appHeader: Header
   },
-  created() {
-    this.$store.dispatch("initProducts");
+  async beforeCreate() {
+    await this.$store.dispatch("initProducts");
   },
   mounted() {
     window.addEventListener("scroll", this.scrollEvent);

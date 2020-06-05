@@ -9,7 +9,7 @@ function getProducts(req, res) {
     .catch((err) => res.jsend.error(err));
 }
 
-async function getAllUserProducts(req, res) {
+function getAllUserProducts(req, res) {
   const id = req.params.id;
   models.Users.findByPk(id, { include: "products" })
     .then((data) => data.products)

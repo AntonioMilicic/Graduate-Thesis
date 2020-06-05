@@ -10,11 +10,30 @@ function getUser(req, res) {
   models.Users.findOne(query)
     .then((user) => {
       if (user != null) {
+        const data = user;
         user.password = "";
         res.jsend.success(user);
       } else res.jsend.error(user);
     })
     .catch((err) => res.jsend.error(err));
+}
+
+function getUserByProductId(req, res) {
+  const id = req.params.id;
+
+  models.Products.findByPk(id, { include: "user" })
+    .then(data => data.user)
+    .then(user => {
+      const response = {
+        username: user.username,
+        email: user.email,
+        country: user.country,
+        city: user.city,
+        zipCode: user.zipCode,
+        image: user.image
+      }
+      res.jsend.success(response);
+    }).catch(err => res.jsend.error(err));
 }
 
 // Post user authentification
@@ -88,6 +107,7 @@ async function updateUser(req, res) {
 
 module.exports = {
   getUser,
+  getUserByProductId,
   userAuth,
   addUser,
   updateUser,
