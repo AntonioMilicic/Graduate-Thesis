@@ -12,7 +12,7 @@
           v-model="selectedCategory"
           @change="filterCategoryProducts"
         >
-          <option>Select category</option>
+          <option v-if="filteredProducts.length == 0">Select category</option>
           <option>All categories</option>
           <option v-for="category in categories" :key="category">{{category}}</option>
         </select>
@@ -55,8 +55,11 @@ export default {
   computed: {
     ...mapGetters(["categories", "products"])
   },
-  async created() {
+  created() {
     this.filteredProducts = this.products;
+    if (this.filteredProducts.length != 0) {
+      this.selectedCategory = "All categories";
+    }
   },
   methods: {
     filterCategoryProducts() {
@@ -71,9 +74,21 @@ export default {
       }
     },
     searchFor() {
-      this.filteredProducts = this.products.filter(product =>
-        product.title.toLowerCase().includes(this.searchValue.toLowerCase())
-      );
+      if (this.selectedCategory != "Select category") {
+        if (this.selectedCategory === "All categories") {
+          this.filteredProducts = this.products.filter(product =>
+            product.title.toLowerCase().includes(this.searchValue.toLowerCase())
+          );
+        } else {
+          this.filteredProducts = this.products.filter(
+            product =>
+              product.title
+                .toLowerCase()
+                .includes(this.searchValue.toLowerCase()) &&
+              product.category.includes(this.selectedCategory)
+          );
+        }
+      }
     }
   }
 };
