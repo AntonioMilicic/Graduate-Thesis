@@ -126,6 +126,9 @@ export default {
 .nav-link {
   font-size: 18px;
 }
+.active {
+  border-bottom: #28a745 2px solid;
+}
 .sign-out-link {
   cursor: pointer;
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="product-container-wrapper">
-    <div class="row">
+    <div class="row product-controller">
       <div class="category-content">
         <label class="category-label" for="category">
           <font-awesome-icon icon="list" />
@@ -17,7 +17,6 @@
           <option v-for="category in categories" :key="category">{{category}}</option>
         </select>
       </div>
-
       <div class="input-field">
         <input
           class="input-search"
@@ -105,6 +104,7 @@ export default {
 .row .category-content .category-selection {
   width: 215px;
   font-size: 18px;
+  height: 37.7px;
   background-color: rgb(243, 241, 241);
   outline: none;
 }
@@ -130,14 +130,16 @@ export default {
 }
 
 @media only screen and (max-width: 768px) {
+  .product-controller {
+    display: flex;
+    flex-direction: column;
+  }
   .row .category-content {
     margin: auto;
     margin-bottom: 10px;
   }
   .row .input-field {
-    display: flex;
     margin-right: auto;
-    margin-bottom: 20px;
   }
 }
 </style>
