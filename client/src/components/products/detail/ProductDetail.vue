@@ -94,7 +94,7 @@ export default {
     };
   },
   async created() {
-    this.owner = await { ...getOwnerData(this.$route.params.id) };
+    this.owner = await getOwnerData(this.$route.params.id);
   },
   computed: {
     getProductDetail() {
