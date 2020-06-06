@@ -33,46 +33,78 @@
         <h2>{{ getProductDetail.title }}</h2>
         <hr />
 
-        <div class="float-left">
-          <p>
-            Price: {{ getProductDetail.price }} | On Stock:
-            {{ getProductDetail.quantity }}
-          </p>
-          <span>{{ getProductDetail.category }}</span>
-          <span>{{ getProductDetail.location }}</span>
-          <p class="product-description">{{ getProductDetail.description }}</p>
-        </div>
-
-        <div class="float-right">
-          <div>
-            <input
-              class="form-control float-right quantity-field"
-              type="number"
-              min="0"
-              placeholder="Q"
-              v-model.number="quantity"
-            />
+        <div class="product-data-controller">
+          <div class="float-left">
+            <p>
+              Price: {{ getProductDetail.price }} | On Stock:
+              {{ getProductDetail.quantity }}
+            </p>
+            <span>{{ getProductDetail.category }}</span>
+            <span>{{ getProductDetail.location }}</span>
+            <p class="product-description">{{ getProductDetail.description }}</p>
           </div>
 
-          <div class="sell-container">
-            <button
-              class="btn btn-success add-cart"
-              @click="addToCart"
-              :disabled="
+          <div class="float-right">
+            <div>
+              <input
+                class="form-control quantity-field"
+                type="number"
+                min="0"
+                placeholder="Q"
+                v-model.number="quantity"
+              />
+            </div>
+
+            <div class="sell-container">
+              <button
+                class="btn btn-success add-cart"
+                @click="addToCart"
+                :disabled="
                 quantity === 0 ||
                   quantity > getProductDetail.quantity ||
                   !Number.isInteger(quantity)
               "
-            >
-              <span>
-                Add To Cart
-                <font-awesome-icon icon="shopping-cart" />
-              </span>
-            </button>
+              >
+                <span>
+                  Add To Cart
+                  <font-awesome-icon icon="shopping-cart" />
+                </span>
+              </button>
+            </div>
           </div>
         </div>
 
-        <div class="img-center">
+        <div class="img-center" v-if="productImgs.length > 0 ">
+          <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img class="product-img d-block" :src="imgSrc(firstProductImg)" alt="0 slide" />
+              </div>
+              <div class="carousel-item" v-for="(image, index) in productImgs" :key="index">
+                <img class="product-img d-block" :src="imgSrc(image)" :alt="(index + 1) + ' slide'" />
+              </div>
+            </div>
+            <a
+              class="carousel-control-prev"
+              href="#carouselExampleControls"
+              role="button"
+              data-slide="prev"
+            >
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a
+              class="carousel-control-next"
+              href="#carouselExampleControls"
+              role="button"
+              data-slide="next"
+            >
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+        </div>
+        <div class="img-center" v-else>
           <img
             class="product-img"
             alt="product-img"
@@ -90,11 +122,19 @@ export default {
   data() {
     return {
       quantity: 0,
-      owner: {}
+      owner: {},
+      firstProductImg: "",
+      productImgs: []
     };
   },
   async created() {
     this.owner = await getOwnerData(this.$route.params.id);
+    const images = [...this.getProductDetail.imageSources];
+    this.firstProductImg = images[0];
+    if (images.length > 1) {
+      this.productImgs = images;
+      this.productImgs.shift();
+    }
   },
   computed: {
     getProductDetail() {
@@ -175,6 +215,8 @@ export default {
   background-color: rgb(243, 241, 241);
 }
 .container-center .product-content {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   padding: 30px;
 }
