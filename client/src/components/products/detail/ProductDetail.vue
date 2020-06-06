@@ -2,7 +2,7 @@
   <div class="product-detail-wrapper outer-container">
     <div class="container-center">
       <div class="user-data">
-        <img class="user-image" alt="user-img" :src="imgURL(owner.image)" v-if="owner.image" />
+        <img class="user-image" alt="user-img" :src="imgSrc(owner.image)" v-if="owner.image" />
         <h6>Owner Data</h6>
         <ul class="user-detail">
           <li>
@@ -76,7 +76,7 @@
           <img
             class="product-img"
             alt="product-img"
-            :src="imgURL(getProductDetail.imageSources[0])"
+            :src="imgSrc(getProductDetail.imageSources[0])"
           />
         </div>
       </div>
@@ -102,7 +102,7 @@ export default {
     }
   },
   methods: {
-    imgURL(url) {
+    imgSrc(url) {
       if (url[0] == "/") return require("../../../assets/images" + url);
       else return url;
     },

@@ -2,7 +2,7 @@
   <div class="cart-product-wrapper card">
     <div class="row no-gutters">
       <div class="col-md-4 img-container">
-        <img class="card-img" alt="cart-image" :src="imgURL(cartProduct.imageSources[0])" />
+        <img class="card-img" alt="cart-image" :src="imgSrc(cartProduct.imageSources[0])" />
       </div>
 
       <div class="col-md-8">
@@ -36,7 +36,7 @@ export default {
       removeItem: "removeFromCart_Store",
       quantityAlter: "quantityAlter_Store"
     }),
-    imgURL(url) {
+    imgSrc(url) {
       if (url[0] == "/") return require("../../assets/images" + url);
       else return url;
     },

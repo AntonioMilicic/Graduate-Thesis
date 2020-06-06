@@ -3,7 +3,7 @@
     <div class="card card-design">
       <router-link :to="path">
         <div class="card-img-container">
-          <img class="card-img" alt="card-img" :src="imgURL(product.imageSources[0])" />
+          <img class="card-img" alt="card-img" :src="imgSrc(product.imageSources[0])" />
         </div>
       </router-link>
 
@@ -57,7 +57,7 @@ export default {
   },
   props: ["product"],
   methods: {
-    imgURL(url) {
+    imgSrc(url) {
       if (url[0] == "/") return require("../../assets/images" + url);
       else return url;
     },
