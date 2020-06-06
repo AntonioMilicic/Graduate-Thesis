@@ -26,7 +26,6 @@ function getUserByProductId(req, res) {
     .then(user => {
       const response = {
         username: user.username,
-        email: user.email,
         country: user.country,
         city: user.city,
         zipCode: user.zipCode,
@@ -59,16 +58,15 @@ function userAuth(req, res) {
 function addUser(req, res) {
   const queryCheck = {
     where: {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      username: req.body.username,
       email: req.body.email,
+      username: req.body.username,
     },
   };
   const query = { ...req.body };
 
   models.Users.findOne(queryCheck)
     .then((exists) => {
+      console.log(exists);
       if (exists == null) {
         models.Users.create(query)
           .then(() => res.jsend.success("success"))
@@ -82,8 +80,7 @@ function addUser(req, res) {
 async function updateUser(req, res) {
   const queryCheck = {
     where: {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
+      email: req.body.email,
       username: req.body.username,
     },
   };

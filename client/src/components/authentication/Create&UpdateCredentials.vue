@@ -80,6 +80,7 @@
             class="form-control inputPassword"
             :class="{ 'invalid-credentials': badPassword || badCredentials }"
             type="password"
+            pattern="[A-Za-z0-9]{4,20}"
             required
             v-model="credentials.password"
             @change="badPassword = false"
@@ -96,6 +97,7 @@
             class="form-control inputPassword"
             :class="{ 'invalid-credentials': badPassword || badCredentials }"
             type="password"
+            pattern="[A-Za-z0-9]{4,20}"
             required
             v-model="credentials.passwordRe"
           />
@@ -256,7 +258,8 @@ export default {
           serverResponse = await postUpdateCredentials(data);
         }
         // error
-        if (serverResponse === null) {
+        console.log(serverResponse);
+        if (serverResponse === "error") {
           this.badCredentials = true;
           document.body.scrollTop = document.documentElement.scrollTop = 0;
         }

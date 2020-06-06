@@ -1,9 +1,11 @@
 import axios from "axios";
 
-export async function getUserProducts(username) {
-  const response = await axios.get("products/user-products/" + username);
-
-  return response.data.data;
+export async function getUserProducts(id) {
+  const response = await axios.get("products/user-products/" + id);
+  if (response.data.status === "success") {
+    return response.data.data;
+  }
+  else return response.data.status;
 }
 
 export async function postUserProduct(order) {
@@ -13,7 +15,6 @@ export async function postUserProduct(order) {
 
 export async function updateUserProduct(order) {
   const response = await axios.post("products/user-product/update/" + order.id, order);
-  console.log(response);
   return response.data.status;
 }
 

@@ -10,10 +10,6 @@
             {{owner.username}}
           </li>
           <li>
-            <b>Email:</b>
-            {{owner.email}}
-          </li>
-          <li>
             <b>Country:</b>
             {{owner.country}}
           </li>

@@ -41,7 +41,7 @@
         </router-link>
       </div>
 
-      <div class="product-content">
+      <div class="product-content" v-if="userProducts.length != 0">
         <h3>Products</h3>
         <hr />
         <div class="list-group">
@@ -100,7 +100,9 @@ export default {
     },
     async getProducts() {
       const userProducts = await getUserProducts(this.userData.id);
-      this.userProducts = userProducts;
+      if (userProducts != "error") {
+        this.userProducts = userProducts;
+      }
     },
     async deleteProduct(id) {
       const response = await postDeleteProduct(id);

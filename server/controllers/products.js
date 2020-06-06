@@ -12,7 +12,7 @@ function getProducts(req, res) {
 function getAllUserProducts(req, res) {
   const id = req.params.id;
   models.Users.findByPk(id, { include: "products" })
-    .then((data) => data.products)
+    .then((data) => { if (data.products) { return data.products } })
     .then((userProducts) => res.jsend.success(userProducts))
     .catch((err) => res.jsend.error(err));
 }
