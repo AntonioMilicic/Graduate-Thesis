@@ -74,14 +74,14 @@
           </div>
         </div>
 
-        <div class="img-center" v-if="productImgs.length > 0 ">
+        <div class="img-center" v-if="productImgs.length > 0">
           <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img class="product-img d-block" :src="imgSrc(firstProductImg)" alt="0 slide" />
+                <img class="product-img" :src="imgSrc(firstProductImg)" alt="0 slide" />
               </div>
               <div class="carousel-item" v-for="(image, index) in productImgs" :key="index">
-                <img class="product-img d-block" :src="imgSrc(image)" :alt="(index + 1) + ' slide'" />
+                <img class="product-img" :src="imgSrc(image)" :alt="(index + 1) + ' slide'" />
               </div>
             </div>
             <a
@@ -105,11 +105,7 @@
           </div>
         </div>
         <div class="img-center" v-else>
-          <img
-            class="product-img"
-            alt="product-img"
-            :src="imgSrc(getProductDetail.imageSources[0])"
-          />
+          <img class="product-img" alt="product-img" :src="imgSrc(firstProductImg)" />
         </div>
       </div>
     </div>
