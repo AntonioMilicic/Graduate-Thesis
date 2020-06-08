@@ -265,10 +265,10 @@ export default {
         }
         // Success
         else {
+          const path = "/Profile/" + data.username;
           delete data.passwordRe;
           this.$store.dispatch("submitUser_Store", data);
-
-          const path = "/Profile/" + data.username;
+          localStorage.setItem("user", JSON.stringify(data));
           this.$router.push({ path: path });
         }
       }

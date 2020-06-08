@@ -111,9 +111,12 @@ export default {
   methods: {
     clearStoreAccState() {
       this.$store.dispatch("clearAccountSate_Store");
-      this.$router.push({
-        path: "/"
-      });
+      localStorage.removeItem("user");
+      if (this.$route.path != "/") {
+        this.$router.push({
+          path: "/"
+        });
+      }
     }
   }
 };

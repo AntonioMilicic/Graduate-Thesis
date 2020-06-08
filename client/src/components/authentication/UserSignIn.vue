@@ -68,6 +68,7 @@ export default {
       } else {
         const path = "/Profile/" + signInStatus.username;
         this.$store.dispatch("submitUser_Store", signInStatus);
+        localStorage.setItem("user", JSON.stringify(signInStatus));
         this.$router.push({ path: path });
       }
     }

@@ -86,7 +86,11 @@ export default {
     ...mapGetters(["userData"])
   },
   created() {
-    if (this.userData.username == "") {
+    const user = localStorage.getItem("user");
+    if (this.userData.username === "" && user != null) {
+      this.$store.dispatch("submitUser_Store", JSON.parse(user));
+    }
+    if (this.userData.username === "") {
       this.$router.push({
         path: "/"
       });

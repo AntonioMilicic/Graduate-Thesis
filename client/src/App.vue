@@ -28,6 +28,12 @@ export default {
   },
   async beforeCreate() {
     await this.$store.dispatch("initProducts");
+    if (window.localStorage.user != null) {
+      this.$store.dispatch(
+        "submitUser_Store",
+        JSON.parse(localStorage.getItem("user"))
+      );
+    }
   },
   mounted() {
     window.addEventListener("scroll", this.scrollEvent);
