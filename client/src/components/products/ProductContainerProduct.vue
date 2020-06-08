@@ -10,7 +10,7 @@
       <div class="card-body">
         <h5 class="card-title">{{ product.title }}</h5>
         <hr />
-        <p class="card-text">{{ product.description }}</p>
+        <p class="card-text">{{ shortDescription }}</p>
         <div>
           <p class="card-text card-price float-left">{{ product.price | currency }}</p>
           <input
@@ -52,10 +52,19 @@ export default {
     return {
       path: "Products/Product-" + this.product.id,
       toolTipText: "",
-      quantity: 1
+      quantity: 1,
+      shortDescription: ""
     };
   },
   props: ["product"],
+  created() {
+    if (this.product.description.length > 20) {
+      this.shortDescription = this.product.description.substring(0, 20);
+      this.shortDescription = this.shortDescription + "...";
+    } else {
+      this.shortDescription = this.product.description;
+    }
+  },
   methods: {
     imgSrc(url) {
       if (url[0] == "/") return require("../../assets/images" + url);

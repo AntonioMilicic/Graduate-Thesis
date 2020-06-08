@@ -32,11 +32,18 @@
         <div class="product-data-controller">
           <div class="float-left">
             <p>
-              Price: {{ getProductDetail.price }} | On Stock:
+              <b>Price:</b>
+              {{ getProductDetail.price | currency }} |
+              <b>On Stock:</b>
               {{ getProductDetail.quantity }}
+              <br />
+              <b>Category:</b>
+              {{ getProductDetail.category }}
             </p>
-            <span>{{ getProductDetail.category }}</span>
-            <span>{{ getProductDetail.location }}</span>
+            <span>
+              <b>Description:</b>
+              {{ getProductDetail.location }}
+            </span>
             <p class="product-description">{{ getProductDetail.description }}</p>
           </div>
 
@@ -70,14 +77,11 @@
           </div>
         </div>
 
-        <div class="img-center" v-if="productImgs.length > 0">
+        <div class="img-center">
           <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img class="product-img" :src="imgSrc(firstProductImg)" alt="0 slide" />
-              </div>
               <div class="carousel-item" v-for="(image, index) in productImgs" :key="index">
-                <img class="product-img" :src="imgSrc(image)" :alt="(index + 1) + ' slide'" />
+                <img class="product-img" :alt="(index) + ' slide'" :src="imgSrc(image)" />
               </div>
             </div>
             <a
@@ -85,6 +89,7 @@
               href="#carouselExampleControls"
               role="button"
               data-slide="prev"
+              v-if="productImgs.length > 1"
             >
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="sr-only">Previous</span>
@@ -94,14 +99,12 @@
               href="#carouselExampleControls"
               role="button"
               data-slide="next"
+              v-if="productImgs.length > 1"
             >
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
               <span class="sr-only">Next</span>
             </a>
           </div>
-        </div>
-        <div class="img-center" v-else>
-          <img class="product-img" alt="product-img" :src="imgSrc(firstProductImg)" />
         </div>
       </div>
     </div>
@@ -115,18 +118,17 @@ export default {
     return {
       quantity: 0,
       owner: {},
-      firstProductImg: "",
       productImgs: []
     };
   },
   async created() {
     this.owner = await getOwnerData(this.$route.params.id);
-    const images = [...this.getProductDetail.imageSources];
-    this.firstProductImg = images[0];
-    if (images.length > 1) {
-      this.productImgs = images;
-      this.productImgs.shift();
-    }
+    this.productImgs = await [...this.getProductDetail.imageSources];
+    // Carousel needs active class on one of the elements
+    const carouselImages = await document.getElementsByClassName(
+      "carousel-item"
+    );
+    carouselImages[0].classList.add("active");
   },
   computed: {
     getProductDetail() {
