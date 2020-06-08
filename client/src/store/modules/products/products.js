@@ -5,7 +5,6 @@ import * as getters from "./getters";
 const state = {
   products: [],
   cart: [],
-  totalPrice: 0,
 };
 
 export default {

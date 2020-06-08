@@ -2,7 +2,7 @@ export const SET_PRODUCTS = (state, products) => {
   state.products = products;
 };
 
-export const ADD_TO_CART = (state, { productId, quantitySelected, price }) => {
+export const ADD_TO_CART = (state, { productId, quantitySelected }) => {
   const previousData = state.cart.find((element) => element.id === productId);
   const reduceStoreQuantity = state.products.find(
     (element) => element.id === productId
@@ -17,7 +17,26 @@ export const ADD_TO_CART = (state, { productId, quantitySelected, price }) => {
       quantitySelected,
     });
   }
-  state.totalPrice += price * quantitySelected;
+};
+
+export const PERSIST_TO_CART = (state, payload) => {
+  const data = [...payload];
+  data.forEach(item => {
+    const previousData = state.cart.find((element) => element.id === item.id);
+    const reduceStoreQuantity = state.products.find(
+      (element) => element.id === item.id
+    );
+    reduceStoreQuantity.quantity -= item.quantitySelected;
+    if (previousData) {
+      previousData.quantitySelected += item.quantitySelected;
+    } else {
+      state.cart.push({
+        id: item.id,
+        quantitySelected: item.quantitySelected,
+      });
+    }
+  });
+
 };
 
 export const REMOVE_FROM_CART = (state, id) => {

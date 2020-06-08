@@ -65,6 +65,11 @@ export default {
       this.shortDescription = this.product.description;
     }
   },
+  computed: {
+    getCart() {
+      return this.$store.getters.cart;
+    }
+  },
   methods: {
     imgSrc(url) {
       if (url[0] == "/") return require("../../assets/images" + url);
@@ -73,12 +78,11 @@ export default {
     addToCart() {
       const orderInfo = {
         productId: this.product.id,
-        quantitySelected: this.quantity,
-        price: this.product.price
+        quantitySelected: this.quantity
       };
-
       this.$store.dispatch("addToCart_Store", orderInfo);
       this.quantity = 0;
+      this.sessionCartController();
     },
     toolTip() {
       if (this.product.quantity === 0) {
@@ -91,6 +95,12 @@ export default {
         this.toolTipText = "Set item quantity";
         return true;
       } else return false;
+    },
+    sessionCartController() {
+      if (sessionStorage.getItem("cart") != null) {
+        sessionStorage.removeItem("cart");
+      }
+      sessionStorage.setItem("cart", JSON.stringify(this.getCart));
     }
   }
 };

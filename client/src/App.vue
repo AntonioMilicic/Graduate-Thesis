@@ -34,6 +34,12 @@ export default {
         JSON.parse(localStorage.getItem("user"))
       );
     }
+    if (window.sessionStorage.cart != null) {
+      this.$store.dispatch(
+        "persistToCart_Store",
+        JSON.parse(sessionStorage.getItem("cart"))
+      );
+    }
   },
   mounted() {
     window.addEventListener("scroll", this.scrollEvent);

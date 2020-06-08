@@ -2,7 +2,9 @@
   <div class="cart-product-wrapper card">
     <div class="row no-gutters">
       <div class="col-md-4 img-container">
-        <img class="card-img" alt="cart-image" :src="imgSrc(cartProduct.imageSources[0])" />
+        <router-link :to="path">
+          <img class="card-img" alt="cart-image" :src="imgSrc(cartProduct.imageSources[0])" />
+        </router-link>
       </div>
 
       <div class="col-md-8">
@@ -17,7 +19,9 @@
           <span class="quantity-control float-right" @click="quantityAlt('-')">-</span>
           <span class="quantity-control float-right" @click="quantityAlt('+')">+</span>
           <hr />
-          <p class="text-muted">Total Price: {{ cartProduct.price * cartProduct.selectedQuantity }}</p>
+          <p
+            class="text-muted"
+          >Total Price: {{ cartProduct.price * cartProduct.selectedQuantity | currency}}</p>
         </div>
       </div>
 
@@ -30,7 +34,17 @@
 import { mapActions } from "vuex";
 
 export default {
+  data() {
+    return {
+      path: "Products/Product-" + this.cartProduct.id
+    };
+  },
   props: ["cartProduct"],
+  computed: {
+    getCart() {
+      return this.$store.getters.cart;
+    }
+  },
   methods: {
     ...mapActions({
       removeItem: "removeFromCart_Store",
@@ -42,10 +56,18 @@ export default {
     },
     removeCartItem() {
       this.removeItem(this.cartProduct.id);
+      this.sessionCartController();
     },
     quantityAlt(value) {
       const order = { operation: value, id: this.cartProduct.id };
       this.quantityAlter(order);
+      this.sessionCartController();
+    },
+    sessionCartController() {
+      if (sessionStorage.getItem("cart") != null) {
+        sessionStorage.removeItem("cart");
+      }
+      sessionStorage.setItem("cart", JSON.stringify(this.getCart));
     }
   }
 };

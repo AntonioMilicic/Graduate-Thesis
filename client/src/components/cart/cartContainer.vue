@@ -34,6 +34,7 @@ export default {
   methods: {
     clearCart() {
       this.$store.dispatch("clearCart_Store");
+      sessionStorage.removeItem("cart");
     }
   }
 };

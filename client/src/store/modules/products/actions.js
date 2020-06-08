@@ -9,6 +9,10 @@ export const addToCart_Store = ({ commit }, payload) => {
   commit("ADD_TO_CART", payload);
 };
 
+export const persistToCart_Store = ({ commit }, payload) => {
+  commit("PERSIST_TO_CART", payload);
+};
+
 export const removeFromCart_Store = ({ commit }, id) => {
   commit("REMOVE_FROM_CART", id);
 };

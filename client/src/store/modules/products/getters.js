@@ -21,6 +21,10 @@ export const selectedProducts = (state) => {
   });
 };
 
+export const cart = (state) => {
+  return state.cart;
+};
+
 export const categories = (state) => {
   let categoryList = [];
 
