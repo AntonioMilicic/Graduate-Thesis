@@ -8,7 +8,7 @@ function getProducts(req, res) {
     })
     .catch((err) => res.jsend.error(err));
 }
-
+// Get all products that belong to one user
 function getAllUserProducts(req, res) {
   const id = req.params.id;
   models.Users.findByPk(id, { include: "products" })
@@ -16,7 +16,7 @@ function getAllUserProducts(req, res) {
     .then((userProducts) => res.jsend.success(userProducts))
     .catch((err) => res.jsend.error(err));
 }
-
+// Create new product
 async function createProduct(req, res) {
   const query = {
     where: {
@@ -35,7 +35,7 @@ async function createProduct(req, res) {
       .catch((err) => res.jsend.error(err));
   }
 }
-
+// Update product data
 async function updateProduct(req, res) {
   const id = req.params.id;
   const payload = req.body;
@@ -53,7 +53,7 @@ async function updateProduct(req, res) {
   } else res.jsend.error(product);
 
 }
-
+// Delete product
 function deleteProduct(req, res) {
   const id = req.params.id;
   models.Products.findByPk(id)

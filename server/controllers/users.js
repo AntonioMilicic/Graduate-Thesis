@@ -17,7 +17,7 @@ function getUser(req, res) {
     })
     .catch((err) => res.jsend.error(err));
 }
-
+// Get user data from req product id
 function getUserByProductId(req, res) {
   const id = req.params.id;
 
@@ -34,7 +34,6 @@ function getUserByProductId(req, res) {
       res.jsend.success(response);
     }).catch(err => res.jsend.error(err));
 }
-
 // Post user authentification
 function userAuth(req, res) {
   const query = {
@@ -53,7 +52,6 @@ function userAuth(req, res) {
     })
     .catch((err) => res.jsend.error(err));
 }
-
 // Create new user
 function addUser(req, res) {
   const queryCheck = {
@@ -66,7 +64,6 @@ function addUser(req, res) {
 
   models.Users.findOne(queryCheck)
     .then((exists) => {
-      console.log(exists);
       if (exists == null) {
         models.Users.create(query)
           .then(() => res.jsend.success("success"))
@@ -75,7 +72,6 @@ function addUser(req, res) {
     })
     .catch((err) => res.jsend.error(err));
 }
-
 // Update user data
 async function updateUser(req, res) {
   const queryCheck = {

@@ -193,7 +193,7 @@
                 class="form-control"
                 type="text"
                 required
-                v-model="payment.cardName"
+                v-model="payment.cardOwnerName"
               />
               <small class="text-muted">Full name as displayed on card</small>
             </div>
@@ -235,6 +235,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { postOrder } from "./server_comm/cartController";
 export default {
   data() {
     return {
@@ -254,7 +255,7 @@ export default {
       },
       payment: {
         cardType: "",
-        cardName: "",
+        cardOwnerName: "",
         cardNumber: "",
         expiration: "",
         cvv: ""
@@ -286,14 +287,25 @@ export default {
       });
       return total;
     },
-    submitCheckout() {
+    async submitCheckout() {
       const order = {
-        user: this.user,
+        user: {
+          firstName: this.user.firstName,
+          lastName: this.user.lastName,
+          email: this.user.email,
+          country: this.user.country,
+          city: this.user.city,
+          address: this.user.address,
+          houseNumber: this.user.houseNumber,
+          zipCode: this.body.user.zipCode
+        },
         products: this.products,
         payment: this.payment
       };
       console.log(order);
       // Generate order on db, reduce quantity on db
+      const status = await postOrder(order);
+      console.log(status);
     }
   }
 };

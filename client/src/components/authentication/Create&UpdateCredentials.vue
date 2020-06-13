@@ -267,6 +267,7 @@ export default {
         else {
           const path = "/Profile/" + data.username;
           delete data.passwordRe;
+          delete data.password;
           this.$store.dispatch("submitUser_Store", data);
           localStorage.setItem("user", JSON.stringify(data));
           this.$router.push({ path: path });

@@ -4,6 +4,7 @@ const jsend = require("jsend");
 
 const product = require("./products");
 const user = require("./users");
+const order = require("./orders");
 
 router.use(jsend.middleware);
 
@@ -15,7 +16,8 @@ router.delete("/products/user-product/delete/:id", product.deleteProduct);
 router.get("/users/user-by-product-Id/:id", user.getUserByProductId);
 router.get("/users/:id", user.getUser);
 router.post("/login", user.userAuth);
-router.post("/createAccount", user.addUser);
-router.post("/updateAccount", user.updateUser);
+router.post("/create-account", user.addUser);
+router.post("/update-account", user.updateUser);
+router.post("/create-order", order.createOrder);
 
 module.exports = router;

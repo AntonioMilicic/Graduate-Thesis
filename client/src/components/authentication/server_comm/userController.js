@@ -8,12 +8,13 @@ export async function postSignIn(email, password) {
 
 export async function postCredentials(payload) {
   const data = { ...payload };
-  const response = await axios.post("/createAccount", data);
+  const response = await axios.post("/create-account", data);
   return response.data.status;
 }
 
 export async function postUpdateCredentials(payload) {
   const data = { ...payload };
-  const response = await axios.post("/updateAccount", data);
+  const response = await axios.post("/update-account", data);
   return response.data.status;
 }
+

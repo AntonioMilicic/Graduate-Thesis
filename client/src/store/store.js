@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import products from "./modules/products/products";
-import account from "./modules/account/account";
+import account from "./modules/users/users";
 
 Vue.use(Vuex);
 
