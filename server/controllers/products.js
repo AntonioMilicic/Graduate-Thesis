@@ -23,6 +23,7 @@ async function createProduct(req, res) {
       username: req.body.username,
     },
   };
+  // Find user ID from username
   const user = await models.Users.findOne(query);
   if (user != null) {
     delete req.body.username;

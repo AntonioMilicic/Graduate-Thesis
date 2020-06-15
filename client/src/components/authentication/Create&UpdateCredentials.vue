@@ -258,8 +258,7 @@ export default {
           serverResponse = await postUpdateCredentials(data);
         }
         // error
-        console.log(serverResponse);
-        if (serverResponse === "error") {
+        if (serverResponse.status === "error") {
           this.badCredentials = true;
           document.body.scrollTop = document.documentElement.scrollTop = 0;
         }
@@ -268,6 +267,10 @@ export default {
           const path = "/Profile/" + data.username;
           delete data.passwordRe;
           delete data.password;
+          if (create === true) {
+            data.id = serverResponse.data;
+          }
+
           this.$store.dispatch("submitUser_Store", data);
           localStorage.setItem("user", JSON.stringify(data));
           this.$router.push({ path: path });

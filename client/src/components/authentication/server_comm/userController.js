@@ -9,12 +9,12 @@ export async function postSignIn(email, password) {
 export async function postCredentials(payload) {
   const data = { ...payload };
   const response = await axios.post("/create-account", data);
-  return response.data.status;
+  return response.data;
 }
 
 export async function postUpdateCredentials(payload) {
   const data = { ...payload };
   const response = await axios.post("/update-account", data);
-  return response.data.status;
+  return response.data;
 }
 

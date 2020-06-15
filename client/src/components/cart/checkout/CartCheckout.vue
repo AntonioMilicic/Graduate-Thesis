@@ -288,7 +288,18 @@ export default {
       return total;
     },
     async submitCheckout() {
+      const cartProducts = [];
+      this.products.forEach(product => {
+        const item = {
+          id: product.id,
+          userId: product.userId,
+          quantity: product.selectedQuantity,
+          price: product.price
+        };
+        cartProducts.push(item);
+      });
       const order = {
+        userId: this.user.id,
         user: {
           firstName: this.user.firstName,
           lastName: this.user.lastName,
@@ -297,9 +308,9 @@ export default {
           city: this.user.city,
           address: this.user.address,
           houseNumber: this.user.houseNumber,
-          zipCode: this.body.user.zipCode
+          zipCode: this.user.zipCode
         },
-        products: this.products,
+        products: cartProducts,
         payment: this.payment
       };
       console.log(order);

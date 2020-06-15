@@ -66,7 +66,7 @@ function addUser(req, res) {
     .then((exists) => {
       if (exists == null) {
         models.Users.create(query)
-          .then(() => res.jsend.success("success"))
+          .then((data) => res.jsend.success(data.id))
           .catch((err) => res.jsend.error(err));
       } else res.jsend.error(exists);
     })
