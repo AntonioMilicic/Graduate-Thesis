@@ -55,14 +55,14 @@ export default {
       const checkbox = document.getElementById("checkbox");
       const passwordField = document.getElementById("inputPassword");
 
-      if (checkbox.checked === true) {
+      if (checkbox.checked) {
         passwordField.type = "text";
       } else passwordField.type = "password";
     },
     async submitSignIn() {
       const signInStatus = await postSignIn(this.email, this.password);
 
-      if (signInStatus === undefined) {
+      if (!signInStatus) {
         this.password = "";
         this.badCredentials = true;
       } else {

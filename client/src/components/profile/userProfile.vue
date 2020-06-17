@@ -87,13 +87,11 @@ export default {
   },
   created() {
     const user = localStorage.getItem("user");
-    if (this.userData.username === "" && user != null) {
+    if (!this.userData.username && user) {
       this.$store.dispatch("submitUser_Store", JSON.parse(user));
     }
-    if (this.userData.username === "") {
-      this.$router.push({
-        path: "/"
-      });
+    if (!this.userData.username) {
+      this.$router.push({ path: "/" });
     } else this.getProducts();
   },
   methods: {

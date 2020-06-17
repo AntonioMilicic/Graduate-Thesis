@@ -207,7 +207,7 @@ export default {
   },
   created() {
     // Push to frontpage if user is not signed but he is on update profile page(replace with router guard?)
-    if (this.user.username === "" && this.$route.path !== "/CreateAccount") {
+    if (!this.user.username && this.$route.path !== "/CreateAccount") {
       this.$router.push({ path: "/" });
     } else {
       // Show update or create button and set credentials to existing ones
@@ -234,7 +234,7 @@ export default {
       const checkbox = document.getElementById("checkbox");
       const passwordField = document.getElementsByClassName("inputPassword");
 
-      if (checkbox.checked === true) {
+      if (checkbox.checked) {
         passwordField.forEach(element => (element.type = "text"));
       } else {
         passwordField.forEach(element => (element.type = "password"));
@@ -252,9 +252,9 @@ export default {
         data.passwordRe = "";
         this.badPassword = true;
       } else {
-        if (create === true) {
+        if (create) {
           serverResponse = await postCredentials(data);
-        } else if (create === false) {
+        } else if (!create) {
           serverResponse = await postUpdateCredentials(data);
         }
         // error
@@ -267,7 +267,7 @@ export default {
           const path = "/Profile/" + data.username;
           delete data.passwordRe;
           delete data.password;
-          if (create === true) {
+          if (create) {
             data.id = serverResponse.data;
           }
 

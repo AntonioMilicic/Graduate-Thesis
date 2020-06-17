@@ -25,7 +25,7 @@ async function createProduct(req, res) {
   };
   // Find user ID from username
   const user = await models.Users.findOne(query);
-  if (user != null) {
+  if (user) {
     delete req.body.username;
     const data = req.body;
     data.userId = user.id;
@@ -41,7 +41,7 @@ async function updateProduct(req, res) {
   const id = req.params.id;
   const payload = req.body;
   const product = await models.Products.findByPk(id);
-  if (product != null) {
+  if (product) {
     product.title = payload.title;
     product.price = payload.price;
     product.quantity = payload.quantity;

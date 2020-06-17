@@ -24,39 +24,44 @@ async function createOrder(req, res) {
     price: ""
   }
   // Check if user is logged in and id exists
-  if (req.body.userId != null) {
+  if (req.body.userId) {
     order.userId = req.body.userId;
-  }
+  } // Delete userId from order, so that data type doesnt missmatch
+  else { delete order.userId }
   // Create and get cardId, cardnumber is always unique
   const card = await models.Cards.findOne(cardQuery);
-  if (card == null) {
-    models.Cards.create(cardData)
-      .then(data => { order.cardId = data.id })
-      .catch(err => res.jsend.error(err));
-
+  if (!card) {
+    const createdCard = await models.Cards.create(cardData);
+    order.cardId = createdCard.id;
   }
   else {
     order.cardId = card.id;
   }
   // Create and get buyerId
   const buyer = await models.Buyers.findOne(buyerQuery);
-  if (buyer == null) {
-    models.Buyers.create(buyerData)
-      .then(data => { order.buyerId = data.id })
-      .catch(err => res.jsend.error(err));
+  if (!buyer) {
+    const createdBuyer = await models.Buyers.create(buyerData)
+    order.buyerId = createdBuyer.id;
   }
   else {
     order.buyerId = buyer.id;
   }
   // For each product from cart, make an order
-  req.body.products.forEach(product => {
+  req.body.products.forEach(async product => {
     order.productId = product.id;
     order.productOwnerId = product.userId;
     order.quantity = product.quantity;
     order.price = product.price;
 
-    models.Orders.create(order)
-      .catch((err) => res.jsend.error(err));
+    await models.Orders.create(order);
+    // reduce quantity on product
+    models.Products.findByPk(product.id)
+      .then((data) => {
+        if (data) {
+          data.quantity -= product.quantity;
+          data.save();
+        }
+      })
   });
   res.jsend.success("success");
 }

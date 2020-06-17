@@ -56,7 +56,7 @@ export default {
   },
   created() {
     this.filteredProducts = this.products;
-    if (this.filteredProducts.length != 0) {
+    if (this.filteredProducts.length) {
       this.selectedCategory = "All categories";
     }
   },

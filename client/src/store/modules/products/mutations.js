@@ -57,6 +57,10 @@ export const CLEAR_CART = (state) => {
   state.cart = [];
 };
 
+export const CLEAR_CART_STATE = (state) => {
+  state.cart = [];
+};
+
 export const ALTER_CART_QUANTITY = (state, paylod) => {
   const item = state.cart.find((element) => element.id === paylod.id);
   const itemStore = state.products.find((element) => element.id === paylod.id);

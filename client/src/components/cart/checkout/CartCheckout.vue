@@ -68,17 +68,6 @@
             </div>
           </div>
           <div class="mb-3">
-            <label for="username">Username</label>
-            <input
-              id="username"
-              class="form-control"
-              type="text"
-              placeholder="Username"
-              required
-              v-model="user.username"
-            />
-          </div>
-          <div class="mb-3">
             <label for="email">Email</label>
             <div class="input-group">
               <div class="input-group-prepend">
@@ -243,7 +232,6 @@ export default {
         id: "",
         firstName: "",
         lastName: "",
-        username: "",
         role: "",
         email: "",
         country: "",
@@ -266,8 +254,9 @@ export default {
     ...mapGetters({ getUser: "userData", products: "selectedProducts" })
   },
   created() {
+    // Get user from localStorage if store is cleared, but only if there is user in localStorage
     const user = localStorage.getItem("user");
-    if (this.getUser.username === "" && user != null) {
+    if (!this.getUser.username && user) {
       this.$store.dispatch("submitUser_Store", JSON.parse(user));
     }
     this.user = { ...this.getUser };
@@ -313,10 +302,13 @@ export default {
         products: cartProducts,
         payment: this.payment
       };
-      console.log(order);
       // Generate order on db, reduce quantity on db
       const status = await postOrder(order);
-      console.log(status);
+      if (status === "success") {
+        sessionStorage.removeItem("cart");
+        this.$store.dispatch("clearCartState_Store");
+        this.$router.push({ path: "/Products" });
+      }
     }
   }
 };

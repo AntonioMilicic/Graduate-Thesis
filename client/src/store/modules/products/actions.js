@@ -20,6 +20,9 @@ export const removeFromCart_Store = ({ commit }, id) => {
 export const clearCart_Store = ({ commit }) => {
   commit("CLEAR_CART");
 };
+export const clearCartState_Store = ({ commit }) => {
+  commit("CLEAR_CART_STATE");
+};
 
 export const quantityAlter_Store = ({ commit, state }, payload) => {
   const item = state.cart.find((element) => element.id === payload.id);

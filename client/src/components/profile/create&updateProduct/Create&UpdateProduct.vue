@@ -131,7 +131,7 @@ export default {
         path: "/"
       });
     }
-    if (this.$router.currentRoute.params.id != null) {
+    if (this.$router.currentRoute.params.id) {
       const product = {
         ...this.storeProduct(this.$router.currentRoute.params.id)
       };
@@ -163,7 +163,7 @@ export default {
       let response = "";
 
       this.product.imageSources.forEach(element => {
-        imageArray.push(element.value);
+        imageArray.push("/" + element.value);
       });
       const order = {
         title: this.product.title,
@@ -175,9 +175,9 @@ export default {
         username: this.$router.currentRoute.params.username
       };
 
-      if (createProduct === true) {
+      if (createProduct) {
         response = await postUserProduct(order);
-      } else if (createProduct === false) {
+      } else if (!createProduct) {
         order.id = this.product.id;
         response = await updateUserProduct(order);
       }

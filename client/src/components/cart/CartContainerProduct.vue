@@ -64,7 +64,7 @@ export default {
       this.sessionCartController();
     },
     sessionCartController() {
-      if (sessionStorage.getItem("cart") != null) {
+      if (sessionStorage.getItem("cart")) {
         sessionStorage.removeItem("cart");
       }
       sessionStorage.setItem("cart", JSON.stringify(this.getCart));

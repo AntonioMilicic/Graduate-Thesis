@@ -9,7 +9,7 @@ function getUser(req, res) {
   };
   models.Users.findOne(query)
     .then((user) => {
-      if (user != null) {
+      if (user) {
         const data = user;
         user.password = "";
         res.jsend.success(user);
@@ -45,7 +45,7 @@ function userAuth(req, res) {
   // If user is found, dont return password with packet
   models.Users.findOne(query)
     .then((user) => {
-      if (user != null) {
+      if (user) {
         user.password = "";
         res.jsend.success(user);
       } else res.jsend.error(user);
@@ -64,7 +64,7 @@ function addUser(req, res) {
 
   models.Users.findOne(queryCheck)
     .then((exists) => {
-      if (exists == null) {
+      if (!exists) {
         models.Users.create(query)
           .then((data) => res.jsend.success(data.id))
           .catch((err) => res.jsend.error(err));
@@ -83,7 +83,7 @@ async function updateUser(req, res) {
 
   const user = await models.Users.findOne(queryCheck);
 
-  if (user != null) {
+  if (user) {
     user.role = req.body.role;
     user.password = req.body.password;
     user.country = req.body.country;
