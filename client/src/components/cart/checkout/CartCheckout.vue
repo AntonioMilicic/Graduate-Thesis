@@ -224,7 +224,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { postOrder } from "./server_comm/cartController";
+import { postOrder } from "../server_comm/cartController";
 export default {
   data() {
     return {

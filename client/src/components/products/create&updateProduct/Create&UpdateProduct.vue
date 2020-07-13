@@ -106,7 +106,7 @@ import { mapGetters } from "vuex";
 import {
   postUserProduct,
   updateUserProduct
-} from "../server_comm/userController";
+} from "../server_comm/productController";
 export default {
   data() {
     return {
@@ -126,7 +126,7 @@ export default {
   },
   created() {
     // Push to frontpage if user is not signed but he is on create product page
-    if (this.user.id == "") {
+    if (!this.user.id) {
       this.$router.push({
         path: "/"
       });
@@ -163,7 +163,7 @@ export default {
       let response = "";
 
       this.product.imageSources.forEach(element => {
-        imageArray.push("/" + element.value);
+        imageArray.push(element.value);
       });
       const order = {
         title: this.product.title,

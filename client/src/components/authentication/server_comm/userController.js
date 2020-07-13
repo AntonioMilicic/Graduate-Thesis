@@ -14,7 +14,7 @@ export async function postCredentials(payload) {
 
 export async function postUpdateCredentials(payload) {
   const data = { ...payload };
-  const response = await axios.post("/update-account", data);
+  const response = await axios.put("/update-account", data);
   return response.data;
 }
 

@@ -2,7 +2,7 @@ import Home from "../components/homepage/HomePage.vue";
 import Products from "../components/products/ProductContainer.vue";
 import ProductDetail from "../components/products/detail/ProductDetail.vue";
 import Profile from "../components/profile/UserProfile.vue";
-import CreateAndUpdateProduct from "../components/profile/create&updateProduct/Create&UpdateProduct.vue";
+import CreateAndUpdateProduct from "../components/products/create&updateProduct/Create&UpdateProduct.vue";
 import Cart from "../components/cart/CartContainer.vue";
 import Checkout from "../components/cart/checkout/CartCheckout.vue";
 import SignIn from "../components/authentication/UserSignIn.vue";

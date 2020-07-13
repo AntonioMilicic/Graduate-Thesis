@@ -112,7 +112,7 @@
 </template>
 
 <script>
-import { getOwnerData } from "./server_comm/productController";
+import { getOwnerData } from "../server_comm/productController";
 export default {
   data() {
     return {
