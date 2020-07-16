@@ -19,5 +19,6 @@ router.post("/login", user.userAuth);
 router.post("/create-account", user.addUser);
 router.put("/update-account", user.updateUser);
 router.post("/create-order", order.createOrder);
+router.get("/user-orders/:id", order.getOrders);
 
 module.exports = router;

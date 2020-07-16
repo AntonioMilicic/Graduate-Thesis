@@ -1,5 +1,6 @@
 const models = require("../models");
 
+// Create new orders
 async function createOrder(req, res) {
   const cardData = req.body.payment;
   const cardQuery = {
@@ -65,5 +66,17 @@ async function createOrder(req, res) {
   });
   res.jsend.success("success");
 }
+// Get user orders
+async function getOrders(req, res) {
+  const id = req.params.id;
+  const query = {
+    where: {
+      userId: id
+    },
+  };
+  models.Orders.findAll(query)
+    .then((orders) => res.jsend.success(orders))
+    .catch((err) => res.jsend.error(err));
+}
 
-module.exports = { createOrder };
+module.exports = { createOrder, getOrders };
