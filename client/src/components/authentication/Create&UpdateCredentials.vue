@@ -150,8 +150,9 @@
           <input
             id="inputImageLocation"
             class="form-control"
-            type="text"
-            v-model="credentials.image"
+            type="file"
+            name="userImageFile"
+            @change="imageHandler($event)"
           />
         </div>
         <div class="form-group col-md-3">
@@ -197,9 +198,9 @@ export default {
         address: "",
         houseNumber: "",
         zipCode: "",
-        image: "",
         role: ""
       },
+      requestData: new FormData(),
       badCredentials: false,
       badPassword: false,
       showCreate: false
@@ -227,6 +228,9 @@ export default {
     ...mapGetters({ user: "userData" })
   },
   methods: {
+    imageHandler(event) {
+      this.requestData.append("userImage", event.target.files[0]);
+    },
     backToProfile() {
       this.$router.go(-1);
     },
@@ -252,10 +256,13 @@ export default {
         data.passwordRe = "";
         this.badPassword = true;
       } else {
+        for (const property in data) {
+          this.requestData.append(property, data[property]);
+        }
         if (create) {
-          serverResponse = await postCredentials(data);
+          serverResponse = await postCredentials(this.requestData);
         } else if (!create) {
-          serverResponse = await postUpdateCredentials(data);
+          serverResponse = await postUpdateCredentials(this.requestData);
         }
         // error
         if (serverResponse.status === "error") {
@@ -267,12 +274,10 @@ export default {
           const path = "/Profile/" + data.username;
           delete data.passwordRe;
           delete data.password;
-          if (create) {
-            data.id = serverResponse.data;
-          }
+          delete serverResponse.data.password;
 
-          this.$store.dispatch("submitUser_Store", data);
-          localStorage.setItem("user", JSON.stringify(data));
+          this.$store.dispatch("submitUser_Store", serverResponse.data);
+          localStorage.setItem("user", JSON.stringify(serverResponse.data));
           this.$router.push({ path: path });
         }
       }

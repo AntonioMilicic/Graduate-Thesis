@@ -2,7 +2,7 @@
   <div class="user-profile-wrapper outer-container">
     <div class="container-center">
       <div class="user-data" v-show="userData.email">
-        <img class="user-image" alt="user-img" :src="imgSrc(userData.image)" v-if="userData.image" />
+        <img class="user-image" alt="user-img" :src="imgSrc(userData.image)" v-if="imgSrc" />
         <ul class="user-detail">
           <li>
             <b>Name:</b>
@@ -83,10 +83,9 @@ export default {
     }
   },
   methods: {
-    // returns URL for image, deppending if its outer source or local image, set this to work for global fetch
+    // returns URL for image, deppending if its outer source or local image
     imgSrc(url) {
-      if (url[0] == "/") return require("../../assets/images" + url);
-      else return url;
+      return require("../../assets/images/uploads/users/" + url);
     }
   }
 };

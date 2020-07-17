@@ -12,6 +12,7 @@ const controller = require("./controllers/index.js");
 
 const app = express();
 
+app.use('client/src/assets/images/uploads/users', express.static('users'));
 // bodyParser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

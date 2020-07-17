@@ -7,14 +7,16 @@ export async function postSignIn(email, password) {
 }
 
 export async function postCredentials(payload) {
-  const data = { ...payload };
-  const response = await axios.post("/create-account", data);
+  const response = await axios.post("/create-account", payload);
   return response.data;
 }
 
 export async function postUpdateCredentials(payload) {
-  const data = { ...payload };
-  const response = await axios.put("/update-account", data);
+  const response = await axios.put("/update-account", payload, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
   return response.data;
 }
 

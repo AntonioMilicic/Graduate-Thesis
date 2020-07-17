@@ -65,15 +65,24 @@ function addUser(req, res) {
   models.Users.findOne(queryCheck)
     .then((exists) => {
       if (!exists) {
-        models.Users.create(query)
-          .then((data) => res.jsend.success(data.id))
-          .catch((err) => res.jsend.error(err));
+        if (req.file) {
+          query.image = req.file.filename;
+        }
+        // timeout is for image creation, don't know which library in multer should wait
+        setTimeout(function () {
+          models.Users.create(query)
+            .then((data) => res.jsend.success(data))
+            .catch((err) => res.jsend.error(err));
+        }, 500);
+
       } else res.jsend.error(exists);
     })
     .catch((err) => res.jsend.error(err));
 }
 // Update user data
 async function updateUser(req, res) {
+  const fs = require('fs');
+
   const queryCheck = {
     where: {
       email: req.body.email,
@@ -91,10 +100,20 @@ async function updateUser(req, res) {
     user.address = req.body.address;
     user.houseNumber = req.body.houseNumber;
     user.zipCode = req.body.zipCode;
-    user.image = req.body.image;
-
-    user.save();
-    res.jsend.success(user);
+    if (req.file) {
+      fs.unlink("client/src/assets/images/uploads/users/" + user.image, (err) => {
+        if (err) {
+          console.error(err)
+          return
+        }
+      })
+      user.image = req.file.filename
+    }
+    // timeout is for image creation, don't know which library in multer should wait
+    setTimeout(async function () {
+      await user.save();
+      res.jsend.success(user);
+    }, 500);
   } else res.jsend.error(user);
 }
 
