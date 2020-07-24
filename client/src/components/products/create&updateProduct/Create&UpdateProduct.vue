@@ -127,7 +127,7 @@ export default {
   created() {
     // Push to frontpage if user is not signed but he is on create product page
     if (!this.user.id) {
-      this.$router.push({
+      this.$router.replace({
         path: "/"
       });
     }

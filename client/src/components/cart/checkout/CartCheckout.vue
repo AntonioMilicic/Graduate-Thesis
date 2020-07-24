@@ -307,7 +307,7 @@ export default {
       if (status === "success") {
         sessionStorage.removeItem("cart");
         this.$store.dispatch("clearCartState_Store");
-        this.$router.push({ path: "/Products" });
+        this.$router.replace({ path: "/Products" });
       }
     }
   }

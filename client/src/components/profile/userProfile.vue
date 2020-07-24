@@ -79,7 +79,7 @@ export default {
       this.$store.dispatch("submitUser_Store", JSON.parse(user));
     }
     if (!this.userData.username) {
-      this.$router.push({ path: "/" });
+      this.$router.replace({ path: "/" });
     }
   },
   methods: {

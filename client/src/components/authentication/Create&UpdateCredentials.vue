@@ -209,7 +209,7 @@ export default {
   created() {
     // Push to frontpage if user is not signed but he is on update profile page(replace with router guard?)
     if (!this.user.username && this.$route.path !== "/CreateAccount") {
-      this.$router.push({ path: "/" });
+      this.$router.replace({ path: "/" });
     } else {
       // Show update or create button and set credentials to existing ones
       if (this.$route.path === "/CreateAccount") {
@@ -278,7 +278,7 @@ export default {
 
           this.$store.dispatch("submitUser_Store", serverResponse.data);
           localStorage.setItem("user", JSON.stringify(serverResponse.data));
-          this.$router.push({ path: path });
+          this.$router.replace({ path: path });
         }
       }
     }

@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const shrinkRay = require('shrink-ray-current');
 const path = require("path");
 const jsend = require("jsend");
 const cors = require("cors");
@@ -16,6 +17,10 @@ app.use('client/src/assets/images/uploads/users', express.static('users'));
 // bodyParser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// compression for faster loading
+app.use(shrinkRay());
+
 
 // CORS
 app.use(function (req, res, next) {
